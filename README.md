@@ -1,2 +1,2 @@
-puppet_modules
-==============
+puppet
+======
