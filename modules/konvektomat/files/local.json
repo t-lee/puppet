@@ -1,0 +1,6 @@
+{
+    "port": 80,
+    "konvektomatFqdn": "konduktor.spreegle.de",
+    "maxAge": 10,
+    "publicHttp": true
+}

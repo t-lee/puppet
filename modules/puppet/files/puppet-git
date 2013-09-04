@@ -1,0 +1,1 @@
+* * * * *	root	cd /etc/puppet/environments/production/modules && git pull|grep -v 'Already up-to-date.'

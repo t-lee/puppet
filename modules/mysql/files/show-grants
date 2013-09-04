@@ -1,0 +1,22 @@
+#!/bin/bash
+
+echo -n "enter mysql password: "
+read -s password
+echo
+
+opt="-p"
+if [ -z "$password" ];then
+    opt=""
+fi
+
+mysql="mysql -u root "$opt$password
+$mysql -e 'select user,host from mysql.user order by user,host;' \
+    |sed -r 's/\s+/"@"/'                                         \
+    |sed 's/^/show grants for "/'                                \
+    |sed 's/$/";/'                                               \
+    |grep -v 'show grants for "user"@"host";'                    \
+    |$mysql                                                      \
+    |grep -v '^Grants for '                                      \
+    |sed 's/$/;/'|sort
+
+exit 0

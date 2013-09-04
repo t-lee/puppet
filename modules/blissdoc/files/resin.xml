@@ -1,0 +1,73 @@
+<resin xmlns="http://caucho.com/ns/resin" xmlns:resin="urn:java:com.caucho.resin">
+    <log-handler name="" level="all" path="stdout:" timestamp="[%y-%m-%d %H:%M:%S.%s] {%{thread}} "/>
+    <logger name="com.caucho" level="info"/>
+    <logger name="com.caucho.java" level="config"/>
+    <logger name="com.caucho.loader" level="config"/>
+    <class-loader>
+        <tree-loader path="${resin.root}/ext-lib"/>
+    </class-loader>
+    <resin:AdminAuthenticator>
+        <resin:import path="${__DIR__}/admin-users.xml" optional="true"/>
+    </resin:AdminAuthenticator>
+    <dependency-check-interval>2s</dependency-check-interval>
+    <system-property mail.smtp.host="127.0.0.1"/>
+    <system-property mail.smtp.port="25"/>
+
+    <cluster-default>
+        <resin:import path="${__DIR__}/app-default.xml"/>
+        <resin:DeployService/>
+        <host-default>
+            <access-log path="log/access.log" format='%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"'
+                rollover-period="1W"/>
+            <web-app-deploy path="webapps" versioning="true"/>
+            <web-app-default>
+                <prologue>
+                    <allow-servlet-el/>
+                </prologue>
+                <session-config>
+                    <use-persistent-store/>
+                    <enable-url-rewriting>false</enable-url-rewriting>
+                </session-config>
+            </web-app-default>
+        </host-default>
+    </cluster-default>
+
+    <cluster id="blissdoc-cluster">
+        <server id="blissdoc-server" address="0.0.0.0" port="8080">
+            <http address="*" port="80" accept-thread-min="4" accept-thread-max="8"/>
+            <jvm-arg>-Xms512m</jvm-arg>
+            <jvm-arg>-Xmx1024m</jvm-arg>
+            <jvm-arg>-Xmn256m</jvm-arg>
+            <jvm-arg>-Xss2m</jvm-arg>
+            <jvm-arg>-XX:MaxPermSize=128m</jvm-arg>
+            <jvm-arg>-XX:+PrintGCDetails</jvm-arg>
+            <jvm-arg>-XX:+PrintGCTimeStamps</jvm-arg>
+            <jvm-arg>-XX:+UseConcMarkSweepGC</jvm-arg>
+            <jvm-arg>-XX:+UseParNewGC</jvm-arg>
+            <jvm-arg>-XX:+CMSParallelRemarkEnabled</jvm-arg>
+            <jvm-arg>-Djava.net.preferIPv4Stack=true</jvm-arg>
+            <jvm-arg>-Djava.awt.headless=true</jvm-arg>
+            <jvm-classpath>/etc/blissdoc</jvm-classpath>
+            <jvm-classpath>/usr/share/java/*</jvm-classpath>
+        </server>
+        <host root-directory="/var/blissdoc" id="doc.devbliss.com">
+            <host-alias>localhost</host-alias>
+            <access-log path="/var/log/blissdoc_access.log" rollover-period="1W"/>
+            <!-- <development-mode-error-page/> -->
+            <database jndi-name='jdbc/blissdoc-model'>
+                <driver type="com.mysql.jdbc.Driver">
+                    <url>jdbc:mysql://127.0.0.1:3306/blissdoc?zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;maxReconnects=10</url>
+                    <user>blissdoc</user>
+                    <password>blissdoc</password>
+                </driver>
+            </database>
+            <web-app id="/" root-directory="webapp">
+                <class-loader>
+                    <library-loader path="WEB-INF/lib"/>
+                    <library-loader path="/var/blissdoc/share/"/>
+                </class-loader>
+            </web-app>
+        </host>
+    </cluster>
+
+</resin>

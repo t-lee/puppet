@@ -1,0 +1,11 @@
+# epubli Web Service
+
+description     "epubli Web Service"
+author          "Robert Stiller <robert.stiller@devbliss.com>"
+
+start on runlevel [234]
+stop on starting rc RUNLEVEL=[0156]
+
+chdir <%= @epubli_home %>/backend/
+exec <%= @epubli_home %>/backend/service.py
+respawn

@@ -1,0 +1,41 @@
+#
+# THIS FILE IS MANAGED BY PUPPET
+# <%= file %>
+#
+
+[global]
+interval = 15
+
+[apache-status-2xx]
+name = apache_status_2xx
+source = /var/log/apache2/holtzbrinck.com_access.log
+metric = apache_status_2xx
+parser = apache_access_log
+
+[apache-status-3xx]
+name = apache_status_3xx
+source = /var/log/apache2/holtzbrinck.com_access.log
+metric = apache_status_3xx
+parser = apache_access_log
+
+[apache-status-4xx]
+name = apache_status_4xx
+source = /var/log/apache2/holtzbrinck.com_access.log
+metric = apache_status_4xx
+parser = apache_access_log
+
+[apache-status-unknown]
+name = apache_status_unknown
+source = /var/log/apache2/holtzbrinck.com_access.log
+metric = apache_status_unknown
+parser = apache_access_log
+
+[/var/log/apache2/holtzbrinck.com_error.log]
+name = apache_error_log
+parser = file_size_growth
+metric = file_size_growth_15s
+
+[/var/log/syslog]
+name = syslog_rate
+parser = file_size_growth
+metric = file_size_growth_15s

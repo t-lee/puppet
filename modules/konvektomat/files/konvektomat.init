@@ -1,0 +1,21 @@
+#! /bin/sh
+
+case "$1" in
+    start)
+        daemon -o /var/log/konvektomat.log --respawn --name=konvektomat -- konvektomat
+        ;;
+    stop)
+        daemon --name=konvektomat --stop
+        ;;
+    status)
+        daemon --name=konvektomat --running
+        ;;
+    restart|force-reload)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status|restart|force-reload}"
+        exit 1
+        ;;
+esac

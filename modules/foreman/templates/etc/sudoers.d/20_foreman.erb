@@ -1,0 +1,9 @@
+#
+# THIS FILE IS MANAGED BY PUPPET
+# <%= file %>
+#
+
+foreman ALL=(ALL) NOPASSWD:/usr/sbin/puppetca
+foreman-proxy ALL=(ALL) NOPASSWD:/usr/sbin/puppetca --clean *
+foreman-proxy ALL=(ALL) NOPASSWD:/usr/sbin/puppetrun --host *
+

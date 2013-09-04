@@ -1,0 +1,125 @@
+#
+# THIS FILE IS MANAGED BY PUPPET
+# <%= file %>
+#
+
+<VirtualHost *:8060>
+	ServerName www.holtzbrinck.com
+	ServerAlias www-gvh.spreegle.de
+	ServerAlias www.gvh.services.devbliss.com
+
+	#RedirectPermanent /wp-admin/ https://www.holtzbrinck.com/wp-admin/
+	#RedirectPermanent /wp-login.php https://www.holtzbrinck.com/wp-login.php
+
+
+	DocumentRoot /var/www/wordpress/
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /var/www/wordpress/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		allow from all
+	</Directory>
+
+        ErrorLog "/var/log/apache2/holtzbrinck.com_error.log"
+        CustomLog "/var/log/apache2/holtzbrinck.com_access.log" vhost_combined
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel info
+</VirtualHost>
+
+<VirtualHost *:443>
+	ServerName www.holtzbrinck.com
+	ServerAlias www-gvh.spreegle.de
+	ServerAlias www.gvh.services.devbliss.com
+
+	SSLEngine On
+	SSLCertificateFile /etc/apache2/ssl/holtzbrinck.com.pem
+
+	#RewriteEngine on
+	#RewriteRule ^/$    http://www.holtzbrinck.com/ [L,R]
+	#RewriteRule ^/de/$ http://www.holtzbrinck.com/de/ [L,R]
+
+	DocumentRoot /var/www/wordpress/
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /var/www/wordpress/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		allow from all
+	</Directory>
+
+        ErrorLog "/var/log/apache2/holtzbrinck.com_error.log"
+        CustomLog "/var/log/apache2/holtzbrinck.com_access.log" vhost_combined
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel info
+</VirtualHost>
+
+<VirtualHost *:8060>
+	ServerName www-test.holtzbrinck.com
+	ServerAlias www-gvh-staging.spreegle.de
+	ServerAlias www-test.gvh.services.devbliss.com
+
+	#RedirectPermanent /wp-admin/ https://www-test.holtzbrinck.com/wp-admin/
+	#RedirectPermanent /wp-login.php https://www-test.holtzbrinck.com/wp-login.php
+
+	DocumentRoot /var/www/wordpress/
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /var/www/wordpress/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		allow from all
+	</Directory>
+
+        ErrorLog "/var/log/apache2/holtzbrinck.com_error.log"
+        CustomLog "/var/log/apache2/holtzbrinck.com_access.log" vhost_combined
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel info
+</VirtualHost>
+
+<VirtualHost *:443>
+	ServerName www-test.holtzbrinck.com
+	ServerAlias www-gvh-staging.spreegle.de
+	ServerAlias www-test.gvh.services.devbliss.com
+
+    SSLEngine On
+    SSLCertificateFile /etc/apache2/ssl/holtzbrinck.com.pem
+
+	#RewriteEngine on
+	#RewriteRule ^/$    http://www-test.holtzbrinck.com/ [L,R]
+	#RewriteRule ^/de/$ http://www-test.holtzbrinck.com/de/ [L,R]
+    
+	DocumentRoot /var/www/wordpress/
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /var/www/wordpress/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		allow from all
+	</Directory>
+
+        ErrorLog "/var/log/apache2/holtzbrinck.com_error.log"
+        CustomLog "/var/log/apache2/holtzbrinck.com_access.log" vhost_combined
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel info
+</VirtualHost>

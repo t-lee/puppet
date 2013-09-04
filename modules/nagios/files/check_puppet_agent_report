@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+require 'logger'
+
+logger = Logger.new('/tmp/check_puppet_agent_report.log')
+
+arg1 = ARGV[0] || ''
+
+host = arg1
+host = 'oracle-test.hgv.spreegle.de' if arg1 == 'oracle-test.spreegle.de'
+host = 'oracle-test2.hgv.spreegle.de' if arg1 == 'oracle-test2.spreegle.de'
+
+REPORT_DIR='/var/lib/puppet/reports/'+host
+
+begin
+  time = ((Time.now - File.mtime(REPORT_DIR))/60).round
+rescue Exception => ex
+  logger.info ex.message
+  logger.info ex.backtrace.join("\n")
+  if host.size == 0
+    logger.info "no hostname given; exit 3"
+    puts "no hostname given"
+  else
+    logger.info "#{REPORT_DIR}: dir not found; exit 3"
+    puts "dir not found #{REPORT_DIR}"
+  end
+  # Unknown
+  exit 3
+end
+
+if time < 45
+  logger.info "#{REPORT_DIR}: #{time}m < 45m; OK; exit 0"
+  puts "PUPPET AGENT OK"
+  exit 0
+else
+  logger.info "#{REPORT_DIR}: #{time}m > 45m; WARNING; LAST PUPPET AGENT REPORT #{File.mtime(REPORT_DIR)}; exit 1"
+  puts "LAST PUPPET AGENT REPORT #{File.mtime(REPORT_DIR)}"
+  exit 1
+end

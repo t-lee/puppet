@@ -1,0 +1,9 @@
+Please document this machine!
+
+Put these files in /etc/doc: 
+
+- bliss_creator    - who/which team created this machine? (format: email address)
+- bliss_created    - when was this machine created? (format: 2012-01-25)
+- bliss_maintainer - who maintains this machine? (format: email address)
+- bliss_purpose    - what is the purpose of this machine?
+

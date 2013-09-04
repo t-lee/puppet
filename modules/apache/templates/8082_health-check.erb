@@ -1,0 +1,14 @@
+#
+# THIS FILE IS MANAGED BY PUPPET
+# <%= file %>
+#
+
+#Listen 8082
+#NameVirtualHost *:8082
+
+<VirtualHost *:8082>
+        DocumentRoot "/var/empty"
+        Alias /health "/var/www/health.html"
+
+        CustomLog "/var/log/apache2/health-check.log" vhost_combined
+</VirtualHost>
