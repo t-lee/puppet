@@ -1,56 +1,56 @@
 node default {
     #################################################################
     # create stages and bring them into correct order
-    stage { 'devbliss_base': }
-    stage { 'devbliss_advanced': }
+    stage { 'base': }
+    stage { 'avanced': }
     stage { 'last': }
     
-    Stage['devbliss_base']
-    -> Stage['devbliss_advanced']
+    Stage['base']
+    -> Stage['avanced']
     -> Stage['main']
     -> Stage['last']
 
     #################################################################
-    ####  STAGE: devbliss_base
+    ####  STAGE: base
 
     # set hostname
-#    class {'hosts':    stage => devbliss_base}
-#    class {'hostname': stage => devbliss_base}
+#    class {'hosts':    stage => base}
+#    class {'hostname': stage => base}
 
-#    class {'devbliss::locks':   stage => devbliss_base}
-#    class {'ppa':               stage => devbliss_base}
-#    class {'ppa::deb-devbliss': stage => devbliss_base}
-#    class {'apt::update':       stage => devbliss_base}
+#    class {'devbliss::locks':   stage => base}
+#    class {'ppa':               stage => base}
+#    class {'ppa::deb-devbliss': stage => base}
+#    class {'apt::update':       stage => base}
         
 #    Class['devbliss::locks'] -> Class['ppa'] -> Class['ppa::deb-devbliss'] -> Class['apt::update']
     
-    ####  STAGE finished: devbliss_base
+    ####  STAGE finished: base
     #################################################################
 
     #################################################################
-    ####  STAGE: devbliss_advanced
+    ####  STAGE: avanced
 
-#    class {'backup::client':          stage => devbliss_advanced}
-#    class {'nagios::target':          stage => devbliss_advanced}
-#    class {'ganglia::client':         stage => devbliss_advanced}  
+#    class {'backup::client':          stage => avanced}
+#    class {'nagios::target':          stage => avanced}
+#    class {'ganglia::client':         stage => avanced}  
 
-#    class {'vim': stage => devbliss_advanced}
+#    class {'vim': stage => avanced}
     
 #    if $fqdn == $mail_relay {
-#        class {'smarthost::server': stage => devbliss_advanced}
+#        class {'smarthost::server': stage => avanced}
 #    } else {
-#        class {'smarthost::client': stage => devbliss_advanced}
+#        class {'smarthost::client': stage => avanced}
 #    }
     
 #    if $is_virtual == 'false' {
 #        if $is_lxc == 'false' {
 #            if $fqdn != $ntp_server {
-#                class {'ntp::client': stage => devbliss_advanced}
+#                class {'ntp::client': stage => avanced}
 #            }
 #        }
 #    }
 
-    ####  STAGE finished: devbliss_advanced
+    ####  STAGE finished: avanced
     #################################################################
 
 
