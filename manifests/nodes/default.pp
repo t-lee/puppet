@@ -14,8 +14,8 @@ node default {
     ####  STAGE: base
 
     # set hostname
-#    class {'hosts':    stage => base}
-#    class {'hostname': stage => base}
+    class {'hosts':    stage => base}
+    class {'hostname': stage => base}
 
 #    class {'devbliss::locks':   stage => base}
 #    class {'ppa':               stage => base}
