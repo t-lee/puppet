@@ -1,4 +1,4 @@
-node default {
+node default-devbliss {
     #################################################################
     # create stages and bring them into correct order
     stage { 'devbliss_base': }
