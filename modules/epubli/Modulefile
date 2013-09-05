@@ -1,7 +1,0 @@
-name 'devbliss-epubli'
-author 'devbliss'
-version '1.0.0'
-description "This Module provisions
-    machines for epubli-autorencockpit."
-dependency 'puppetlabs/apt', '>=1.1.x'
-dependency 'puppetlabs/stdlib', '>=3.2.x'
