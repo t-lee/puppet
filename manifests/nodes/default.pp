@@ -29,7 +29,7 @@ node default {
 #    class {'nagios::target':          stage => avanced}
 #    class {'ganglia::client':         stage => avanced}  
 
-#    class {'vim': stage => avanced}
+    class {'vim': stage => avanced}
     
 #    if $fqdn == $mail_relay {
 #        class {'smarthost::server': stage => avanced}
