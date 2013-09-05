@@ -8,7 +8,7 @@ class nfs::gvh_config {
       ensure  => "mounted",
       options => "noatime,rsize=32768,wsize=32768,soft,vers=3",
       atboot  => true,
-      require => [Service[portmap],Package[nfs-common],File["/mnt/gvh_config"]],
+      require => [Service[statd],Package[nfs-common],File["/mnt/gvh_config"]],
     }
     
     file { "/mnt/gvh_config":
