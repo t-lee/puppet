@@ -17,12 +17,7 @@ node default {
     class {'hosts':    stage => base}
     class {'hostname': stage => base}
 
-#    class {'devbliss::locks':   stage => base}
-#    class {'ppa':               stage => base}
-#    class {'ppa::deb-devbliss': stage => base}
-#    class {'apt::update':       stage => base}
-        
-#    Class['devbliss::locks'] -> Class['ppa'] -> Class['ppa::deb-devbliss'] -> Class['apt::update']
+#    class {'exec-locks':   stage => base}
     
     ####  STAGE finished: base
     #################################################################
