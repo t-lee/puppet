@@ -1,9 +1,0 @@
-Origin: devbliss
-Label: devbliss
-Suite: stable
-Codename: precise
-Version: 3.0
-Architectures: i386 amd64 armhf source
-Components: main staging testing
-Description: devbliss packages
-SignWith: FE2A119E
