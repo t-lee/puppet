@@ -52,8 +52,6 @@ node default {
     #################################################################
     ####  STAGE: main (this is the default stage)
 
-#    class {'nfs':}
-
     # manage sudoers
 #    class {'devbliss::admin-group':}
 #    class {'sudo':}
