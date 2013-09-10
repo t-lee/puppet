@@ -1,12 +1,11 @@
 class nfs::server {
 
+  package { "nfs-kernel-server": ensure => installed }
+
   service { "portmap": 
     enable     => true,
     ensure     => running,
-    require => Package[nfs-common],
   }
-
-  package { "nfs-kernel-server": ensure => installed }
 
   service { "nfs-kernel-server": 
     enable     => true,
