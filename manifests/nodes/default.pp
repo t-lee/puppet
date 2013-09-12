@@ -46,12 +46,14 @@ node default {
 #        }
 #    }
 
-    ####  STAGE finished: avanced
+    ####  STAGE finished: advanced
     #################################################################
 
 
     #################################################################
     ####  STAGE: main (this is the default stage)
+
+    class {'bashrc':}
 
     # manage sudoers
 #    class {'devbliss::admin-group':}
