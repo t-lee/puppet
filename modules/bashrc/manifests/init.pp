@@ -4,7 +4,7 @@ class bashrc {
     owner  => "root",
     group  => "root",
     mode   => 755,
-    source => "puppet://$puppetserver/modules/bashrc/files/romulus.bashrc.sh";
+    source => "puppet://$puppetserver/modules/bashrc/romulus.bashrc.sh";
   }
 
 }
