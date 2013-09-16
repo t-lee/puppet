@@ -73,7 +73,7 @@ node default {
 #        ensure => absent,
 #    }
 
-#    class {'cron':}
+    class {'cron':}
 
     ####  STAGE finished: main
     #################################################################
