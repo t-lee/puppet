@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby1.9.1
+
+require 'date'
+require 'optparse'
+
+options = {
+  :days => 10,
+  :nagios => false,
+  :list => false,
+}
+optparse = OptionParser.new do |opts|
+  opts.banner = 'Usage: cert_check [options]'
+  opts.on('-d', '--days NUM', 'Days to cert expire') {|days| options[:days] = days.to_i}
+  opts.on('-n', '--nagios', 'Run as Nagios check') {options[:nagios] = true}
+  opts.on('-a', '--all', 'List all certs') {options[:list] = true}
+  opts.on('-h', '--help', 'Display this screen') {puts opts; exit}
+end
+optparse.parse!
+
+class Cert
+  attr_accessor :date
+
+  def initialize(file)
+    @file = file
+    @base = file.split('/').last
+    @enddate = %x{openssl x509 -in #{file} -enddate | head -1}.chop
+    format = "notAfter=%b %e %T %Y GMT"
+    @date = DateTime.strptime(@enddate, format).to_date
+  end
+
+  def will_expire?(seconds)
+    out = %x{openssl x509 -in #{@file} -checkend #{seconds}}
+    out == "Certificate will expire\n" and expire_days > 0
+  end
+
+  def expire_days
+    now = Time.now.to_date
+    days = @date - now
+    days.to_i
+  end
+
+  def to_s
+    day_str = "%4d" % expire_days
+    "expire in #{day_str} days, #{@date}, #{@base[0..-5]}"
+  end
+
+  def <=>(other)
+    self.date <=> other.date
+  end
+end
+
+certs = []
+Dir["/etc/openvpn/keys/*.crt"].each do |file|
+  cert = Cert.new(file)
+  certs << cert if options[:list] or cert.will_expire?(options[:days] * 24 * 3_600)
+end
+
+unless options[:nagios]
+  certs.sort.reverse.each do |cert|
+    puts cert
+  end
+else
+  if certs.empty?
+    puts "OK - No certs will expire in #{options[:days]} days"
+    exit 0
+  else
+    puts "WARNING - #{certs.size} certs expire in #{options[:days]} days"
+    exit 1
+  end
+end
+
+
