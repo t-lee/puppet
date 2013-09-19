@@ -78,7 +78,7 @@ function create_fw_rules {
         echo "INFO: creating fw rules for ip: $ip"
         tpl=$fw_rules/.forward_chain.tpl
         if [ ! -f $tpl ];then die "ERROR: file $tpl does not exist" ; fi
-
+    
         rules=$(echo ${specific_rules} | sed "s/!!IP!!/$ip/g")
         sed "s/!!IP!!/$ip/g" $tpl | sed "s/!!specific_rules!!/$rules/" > $fw_file
     fi
@@ -149,26 +149,26 @@ if [ "$mailcert" == "1" ];then
     cd $tmpdir
     cp $confdir/keys/$name.crt ./$name.crt.txt
     $confdir/easy-rsa/mail-file.pl --to $name --file $tmpdir/$name.crt.txt
-else
+else 
     mkdir -m 0700 -p $tmpdir/devbliss.tblk
-
+    
     cd $confdir
     cat client.ovpn.tpl | sed 's/USERNAME/'$name'/' > $tmpdir/devbliss.tblk/client.ovpn
     cp keys/ca.crt keys/ta.key keys/$name.crt keys/$name.key $tmpdir/devbliss.tblk/
-
+    
     pass=$(pwgen -1)
-
+    
     if [ -z "$pass" ];then die "ERROR: command pwgen is missing"; fi
-
+    
     cd $tmpdir
     echo "INFO: zipping to devbliss.tblk.zip with password '$pass'"
     zip -P $pass -r devbliss.tblk.zip devbliss.tblk
     cd devbliss.tblk
     echo "INFO: zipping to devbliss.zip with password '$pass'"
     zip -P $pass ../devbliss.zip *
-
-
-
+    
+    
+    
     echo "
     INFO: please provide OSX users with file $tmpdir/devbliss.tblk.zip
           or everyone else with $tmpdir/devbliss.zip
@@ -184,5 +184,4 @@ if [ "$printcert" == "1" ];then
     echo "#### END: cert for $name"
     echo "#####################################################################"
 fi
-
 

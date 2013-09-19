@@ -1,0 +1,97 @@
+#! /bin/bash
+
+BASEDIR=/etc/openvpn/iptables.rules.d
+. $BASEDIR/.config # || /sbin/sulogin
+
+load_modules
+
+echo -n "Enabling IP Spoof Protection ... "
+err=0
+for i in /proc/sys/net/ipv4/conf/*/rp_filter;do
+    echo "1" > $i || err=1;
+done
+test $err -eq 0 && f_done || f_failed
+
+
+echo -n "Enabling Syn Flood Protection ... "
+echo "1" > /proc/sys/net/ipv4/tcp_syncookies && f_done || f_failed
+
+
+echo -n "Ignoring Broadcast Echo Requests ... "
+echo "1" > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts && f_done || f_failed
+
+MODE=$1
+case "$MODE" in
+  start)
+        echo "Starting firewall ..."
+        $IPTABLES -P INPUT ACCEPT
+        $IPTABLES -P OUTPUT ACCEPT
+        $IPTABLES -P FORWARD DROP
+        $IPTABLES -F
+        $IPTABLES -X
+        $IPTABLES -t nat -F
+        $IPTABLES -t nat -X
+
+        echo -e "\tenabling ip forwarding"
+        echo 1 > /proc/sys/net/ipv4/ip_forward
+
+        ##########################
+        # Allow localhost Device #
+        ##########################
+        $IPTABLES -A INPUT  -i lo -j ACCEPT
+        $IPTABLES -A OUTPUT -o lo -j ACCEPT
+
+        # here we'll load the available firewall settings
+        load_configs
+
+        echo "firewall started"
+        ;;
+  stop)
+        echo "Stopping firewall ..."
+        $IPTABLES -P INPUT ACCEPT
+        $IPTABLES -P OUTPUT ACCEPT
+        $IPTABLES -P FORWARD DROP
+        $IPTABLES -F
+        $IPTABLES -X
+        $IPTABLES -t nat -F
+        $IPTABLES -t nat -X
+
+        echo -e "\tdisabling ip forwarding"
+        echo 0 > /proc/sys/net/ipv4/ip_forward
+
+        ##########################
+        # Allow localhost Device #
+        ##########################
+        $IPTABLES -A INPUT  -i lo -j ACCEPT
+        $IPTABLES -A OUTPUT -o lo -j ACCEPT
+
+        echo "firewall stopped"
+        ;;
+
+  allow_all)
+        echo "Starting firewall (everything is allowed) ..."
+        $IPTABLES -P INPUT ACCEPT
+        $IPTABLES -P OUTPUT ACCEPT
+        $IPTABLES -P FORWARD ACCEPT
+        $IPTABLES -F
+        $IPTABLES -X
+        $IPTABLES -t nat -F
+        $IPTABLES -t nat -X
+
+        echo -e "\tenabling ip forwarding"
+        echo 1 > /proc/sys/net/ipv4/ip_forward
+
+        echo "firewall started"
+        ;;
+  restart)
+        $0 stop
+        $0 start
+        ;;
+
+  *)
+        echo "Usage: /etc/init.d/firewall {start|stop|allow_all|restart}"
+        exit 1
+esac
+
+exit 0
+
