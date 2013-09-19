@@ -73,14 +73,13 @@ if [ "$keep_cfg" == "0" ];then
         echo "WARN: Cannot find client configuration $ccd/$name, please check." >&2
         exit 1
     fi
-
+    
     ip_range=$(grep 'ifconfig-push' $ccd/$name | sed 's/ifconfig-push //')
     sed -i "s/^#${ip_range}$/${ip_range}/" $ccd/.${trust}.ip-ranges
-
+    
     rm -f $ccd/$name
     ip=$(echo $ip_range|awk '{print $1}')
     rm -f $fw_rules/$ip.fw
     rm -f $fw_rules/$ip.fw.link
     /etc/init.d/firewall start
 fi
-
