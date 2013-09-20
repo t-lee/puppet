@@ -44,11 +44,7 @@ domain=$(echo $name|cut -f 2 -d '@')
 
 if [ -z "$domain" ];then die "ERROR: common name is expected to be an email address" ; fi
 
-if [ "$domain" == "devbliss.com" ];then
-    trust=devbliss
-else
-    trust=other
-fi
+trust=other
 
 confdir=/etc/openvpn
 ccd=$confdir/ccd

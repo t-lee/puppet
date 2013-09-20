@@ -4,7 +4,7 @@ use strict;
 use MIME::Lite;
 use Getopt::Long;
 use File::Basename;
-
+use Net::Domain qw(hostname hostfqdn hostdomain domainname);
 
 my $to = "";
 my $file = "";
@@ -22,7 +22,7 @@ my $cert = $f;
 $cert =~ s/\.txt$//;
 
 my $mail = MIME::Lite->new(
-    From     => 'operations@devbliss.com',
+    From     => 'root@'.hostfqdn(),
     To       => "$to",
     Subject  => "new OpenVPN certificate for $to",
     Type     => 'multipart/mixed'
@@ -31,8 +31,7 @@ my $mail = MIME::Lite->new(
 $mail->attach(Type     => 'TEXT',
               Data     => "Hello,
 
-today you receive a new OpenVPN certificate file for accessing devbliss.com
-network.
+today you receive a new OpenVPN certificate file for accessing ".hostfqdn().".
 
 Instructions:
 1) save the attached file ($f) to disk
@@ -41,29 +40,29 @@ Instructions:
 
 Look at the following instructions for further help.
 
-Regards,
-devbliss operations team
+Regards
+openvpn team
 
 
 #################################
 ## for OSX / Tunnelblick users ##
 
-Disconnect from devbliss OpenVPN tunnel first.
+Disconnect from ".hostfqdn()." OpenVPN tunnel first.
 
 Your Tunnelblick configuration and certificates should be located at the
 following directory:
 
-~/Library/Application Support/Tunnelblick/Configurations/devbliss.tblk/Contents/Resources
+~/Library/Application Support/Tunnelblick/Configurations/".hostfqdn().".tblk/Contents/Resources
 
 See http://code.google.com/p/tunnelblick/wiki/cFileLocations#Configuration_Files
 for further instructions if you have problems where to find your Turnnelblick
 configuration.
 
 Use a command line to copy $cert to the following directory.
-Using the Finder will probably not work since you cannot enter the devbliss.tblk
+Using the Finder will probably not work since you cannot enter the ".hostfqdn().".tblk
 subdirectory by double click.
 
-When connecting to devbliss OpenVPN again Tunnelblick will ask you to verify
+When connecting to ".hostfqdn()." OpenVPN again Tunnelblick will ask you to verify
 the changes you made with your password. Please do so.
 
 
@@ -71,7 +70,7 @@ the changes you made with your password. Please do so.
 ######################
 ## for Windows user ##
 
-Disconnect from devbliss OpenVPN tunnel first.
+Disconnect from ".hostfqdn()." OpenVPN tunnel first.
 
 Copy $cert to the directory where you have your OpenVPN configuration.
 Usually its something like c:\\programm files\\openvpn\\config\\.

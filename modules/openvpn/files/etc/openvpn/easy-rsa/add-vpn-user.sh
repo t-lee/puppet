@@ -1,5 +1,7 @@
 #!/bin/bash
 
+FQDN=$(hostname -f)
+
 
 die() {
     local m="$1"
@@ -46,15 +48,9 @@ domain=$(echo $name|cut -f 2 -d '@')
 
 if [ -z "$domain" ];then die "ERROR: common name is expected to be an email address" ; fi
 
-if [ "$domain" == "devbliss.com" ];then
-    trust=devbliss
-    specific_rules='$IPTABLES -A fwd_!!IP!!_tun_eth -j ACCEPT'
-    default_expires=365
-else
-    trust=other
-    specific_rules=''
-    default_expires=182
-fi
+trust=other
+specific_rules='$IPTABLES -A fwd_!!IP!!_tun_eth -j ACCEPT'
+default_expires=365
 
 if [ -z "$key_expire" ];then
     key_expire=$default_expires
@@ -150,28 +146,28 @@ if [ "$mailcert" == "1" ];then
     cp $confdir/keys/$name.crt ./$name.crt.txt
     $confdir/easy-rsa/mail-file.pl --to $name --file $tmpdir/$name.crt.txt
 else 
-    mkdir -m 0700 -p $tmpdir/devbliss.tblk
+    mkdir -m 0700 -p $tmpdir/$FQDN.tblk
     
     cd $confdir
-    cat client.ovpn.tpl | sed 's/USERNAME/'$name'/' > $tmpdir/devbliss.tblk/client.ovpn
-    cp keys/ca.crt keys/ta.key keys/$name.crt keys/$name.key $tmpdir/devbliss.tblk/
+    cat client.ovpn.tpl | sed 's/USERNAME/'$name'/' > $tmpdir/$FQDN.tblk/client.ovpn
+    cp keys/ca.crt keys/ta.key keys/$name.crt keys/$name.key $tmpdir/$FQDN.tblk/
     
     pass=$(pwgen -1)
     
     if [ -z "$pass" ];then die "ERROR: command pwgen is missing"; fi
     
     cd $tmpdir
-    echo "INFO: zipping to devbliss.tblk.zip with password '$pass'"
-    zip -P $pass -r devbliss.tblk.zip devbliss.tblk
-    cd devbliss.tblk
-    echo "INFO: zipping to devbliss.zip with password '$pass'"
-    zip -P $pass ../devbliss.zip *
+    echo "INFO: zipping to $FQDN.tblk.zip with password '$pass'"
+    zip -P $pass -r $FQDN.tblk.zip $FQDN.tblk
+    cd $FQDN.tblk
+    echo "INFO: zipping to $FQDN.zip with password '$pass'"
+    zip -P $pass ../$FQDN.zip *
     
     
     
     echo "
-    INFO: please provide OSX users with file $tmpdir/devbliss.tblk.zip
-          or everyone else with $tmpdir/devbliss.zip
+    INFO: please provide OSX users with file $tmpdir/$FQDN.tblk.zip
+          or everyone else with $tmpdir/$FQDN.zip
           and remember to remove $tmpdir/
     "
 fi
