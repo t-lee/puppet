@@ -66,6 +66,14 @@ class openvpn {
         require => Package['openvpn'],
     }
 
+    file { '/etc/openvpn/keys':
+        ensure  => directory,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '700',
+        require => Package['openvpn'],
+    }
+
     file { '/etc/openvpn/easy-rsa':
         ensure  => present,
         owner   => 'root',
