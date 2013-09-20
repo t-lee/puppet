@@ -20,6 +20,8 @@ echo "1" > /proc/sys/net/ipv4/tcp_syncookies && f_done || f_failed
 echo -n "Ignoring Broadcast Echo Requests ... "
 echo "1" > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts && f_done || f_failed
 
+FWSTATE=/var/run/firewall
+
 MODE=$1
 case "$MODE" in
   start)
@@ -44,7 +46,7 @@ case "$MODE" in
         # here we'll load the available firewall settings
         load_configs
 
-        echo "firewall started"
+        echo "firewall started" | tee $FWSTATE 
         ;;
   stop)
         echo "Stopping firewall ..."
@@ -65,7 +67,7 @@ case "$MODE" in
         $IPTABLES -A INPUT  -i lo -j ACCEPT
         $IPTABLES -A OUTPUT -o lo -j ACCEPT
 
-        echo "firewall stopped"
+        echo "firewall stopped" | tee $FWSTATE
         ;;
 
   allow_all)
@@ -81,15 +83,18 @@ case "$MODE" in
         echo -e "\tenabling ip forwarding"
         echo 1 > /proc/sys/net/ipv4/ip_forward
 
-        echo "firewall started"
+        echo "firewall started" | tee $FWSTATE
         ;;
   restart)
         $0 stop
         $0 start
         ;;
+  status)
+        cat $FWSTATE
+        ;;
 
   *)
-        echo "Usage: /etc/init.d/firewall {start|stop|allow_all|restart}"
+        echo "Usage: /etc/init.d/firewall {start|stop|allow_all|restart|status}"
         exit 1
 esac
 
