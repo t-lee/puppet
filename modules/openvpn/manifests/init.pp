@@ -59,11 +59,10 @@ class openvpn {
     }
 
     file { '/etc/openvpn/ccd':
-        ensure  => present,
+        ensure  => directory,
         owner   => 'root',
         group   => 'root',
-        source  => "puppet://$puppetserver/modules/openvpn/etc/openvpn/ccd",
-        recurse => true,
+        mode    => '755',
         require => Package['openvpn'],
     }
 
