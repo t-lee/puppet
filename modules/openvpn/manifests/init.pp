@@ -70,7 +70,7 @@ class openvpn {
         ensure  => directory,
         owner   => 'root',
         group   => 'root',
-        mode    => '700',
+        mode    => '755',
         require => Package['openvpn'],
     }
 
