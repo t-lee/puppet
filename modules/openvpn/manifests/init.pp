@@ -40,6 +40,11 @@ class openvpn {
         ensure => present,
     }
 
+    ## needed by /etc/openvpn/easy-rsa/mail-file.pl
+    package { 'libmime-lite-perl':
+        ensure => present,
+    }
+
     file { '/etc/openvpn/openvpn.conf':
         ensure  => present,
         owner   => 'root',
