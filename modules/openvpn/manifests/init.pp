@@ -1,5 +1,5 @@
 class openvpn {
-    package { ruby1.9.1:
+    package { 'ruby1.9.1':
         ensure => present,
     }
 
