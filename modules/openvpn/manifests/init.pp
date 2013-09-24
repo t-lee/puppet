@@ -68,6 +68,8 @@ class openvpn {
         owner   => 'root',
         group   => 'root',
         mode    => '755',
+        recurse => true,
+        replace => false,
         require => Package['openvpn'],
     }
 
