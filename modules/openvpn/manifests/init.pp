@@ -36,7 +36,7 @@ class openvpn {
         require => File['/etc/init.d/firewall'], 
     }
 
-    package { ['openvpn','pwgen']:
+    package { ['openvpn','pwgen','zip']:
         ensure => present,
     }
 
@@ -86,7 +86,7 @@ class openvpn {
         group   => 'root',
         source  => "puppet://$puppetserver/modules/openvpn/etc/openvpn/easy-rsa",
         recurse => true,
-        require => Package['openvpn','pwgen'],
+        require => Package['openvpn','pwgen','zip'],
     }
 
     file { '/etc/openvpn/iptables.rules.d':
