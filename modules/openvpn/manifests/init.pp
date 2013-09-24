@@ -97,11 +97,15 @@ class openvpn {
         require => Package['openvpn'],
     }
 
-#sudo addgroup --system --no-create-home --disabled-login --group openvpn
-#sudo adduser --system --no-create-home --disabled-login --ingroup openvpn openvpn 
-
     group { 'openvpn':
         ensure => present,
         system => true,
+    }
+
+    user { 'openvpn':
+        ensure  => present,
+        system  => true,
+        gid     => 'openvpn',
+        require => Group['openvpn'], 
     }
 }
