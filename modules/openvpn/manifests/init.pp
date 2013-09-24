@@ -67,7 +67,6 @@ class openvpn {
         ensure  => directory,
         owner   => 'root',
         group   => 'root',
-        mode    => '755',
         recurse => true,
         replace => false,
         source  => "puppet://$puppetserver/modules/openvpn/etc/openvpn/ccd",
