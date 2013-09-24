@@ -74,7 +74,7 @@ class openvpn {
     }
 
     file { '/etc/openvpn/keys':
-        ensure  => directory,
+        ensure  => present,
         owner   => 'root',
         group   => 'root',
         mode    => '700',
