@@ -75,7 +75,7 @@ class openvpn {
         ensure  => directory,
         owner   => 'root',
         group   => 'root',
-        mode    => '755',
+        mode    => '700',
         require => Package['openvpn'],
     }
 
@@ -105,6 +105,7 @@ class openvpn {
     user { 'openvpn':
         ensure  => present,
         system  => true,
+        shell   => '/bin/false',
         gid     => 'openvpn',
         require => Group['openvpn'], 
     }
