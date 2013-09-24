@@ -38,13 +38,13 @@ node default {
 #        class {'smarthost::client': stage => avanced}
 #    }
     
-#    if $is_virtual == 'false' {
-#        if $is_lxc == 'false' {
-#            if $fqdn != $ntp_server {
-#                class {'ntp::client': stage => avanced}
-#            }
-#        }
-#    }
+    if $is_virtual == 'false' {
+        if $is_lxc == 'false' {
+            if $fqdn != $ntp_server {
+                class {'ntp::client': stage => avanced}
+            }
+        }
+    }
 
     ####  STAGE finished: advanced
     #################################################################
