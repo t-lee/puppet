@@ -14,7 +14,7 @@ class ntp::client {
   include ntp::service
 
   file { "/etc/ntp.conf":
-    source => "puppet://$puppetserver/modules/ntp/files/client.conf",
+    source => "puppet://$puppetserver/modules/ntp/client.conf",
     require => Package["ntp"],
     notify => Service["ntp"],
   }
