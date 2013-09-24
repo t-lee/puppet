@@ -70,11 +70,11 @@ class openvpn {
         mode    => '755',
         recurse => true,
         replace => false,
+        source  => "puppet://$puppetserver/modules/openvpn/etc/openvpn/ccd",
         require => Package['openvpn'],
     }
 
     file { '/etc/openvpn/keys':
-        ensure  => present,
         owner   => 'root',
         group   => 'root',
         mode    => '700',
