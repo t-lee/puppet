@@ -111,4 +111,12 @@ class openvpn {
         gid     => 'openvpn',
         require => Group['openvpn'], 
     }
+
+    exec { 'create-crl.pem':
+        command => "openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf -gencrl -out /etc/openvpn/crl.pem",
+        path    => "/usr/bin/",
+        creates => "/etc/openvpn/crl.pem",
+        onlyif  => "test -f /etc/openvpn/keys/ca.key",
+        require => File['/etc/openvpn/keys','/etc/openvpn/easy-rsa'],
+    }
 }
