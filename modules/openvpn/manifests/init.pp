@@ -113,7 +113,7 @@ class openvpn {
     }
 
     exec { 'create-crl.pem':
-        command => ". /etc/openvpn/easy-rsa/vars && openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf -gencrl -out /etc/openvpn/crl.pem",
+        command => "/bin/bash source /etc/openvpn/easy-rsa/vars && openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf -gencrl -out /etc/openvpn/crl.pem",
         path    => "/usr/bin/",
         creates => "/etc/openvpn/crl.pem",
         onlyif  => "test -f /etc/openvpn/keys/ca.key",
