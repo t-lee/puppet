@@ -13,3 +13,5 @@ VISUAL=vim
 export VISUAL
 EDITOR=vim
 export EDITOR
+
+export PROMPT_COMMAND="history -a"
