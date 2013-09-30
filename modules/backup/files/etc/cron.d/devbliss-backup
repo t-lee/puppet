@@ -1,0 +1,2 @@
+MAILTO=root@neutral-zone.de
+0 0 * * *	root	/usr/bin/backup_hosts.pl --cfg /etc/backup/backup_hosts.cfg >> /var/log/backup/backup.log
