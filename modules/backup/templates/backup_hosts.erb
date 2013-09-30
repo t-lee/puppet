@@ -1,0 +1,47 @@
+#
+# THIS FILE IS MANAGED BY PUPPET
+# <%= file %>
+#
+#
+# General config file for backup_hosts.pl
+#
+
+[GLOBAL]
+log_dir = /var/log/backup
+lock_file = /var/run/backup_hosts.pid
+max_processes = 2
+max_exectime = 480
+snapshots = 40
+src_dir = /
+dest_dir = /
+rsync_options = -av --delete --numeric-ids -e "ssh -oStrictHostKeyChecking=no -oBatchMode=yes -2"
+remote_user = root
+relative = yes
+save_excludes_dir_structure = no
+overwrite_default_excludes = yes
+exclude = <<EOT
+/proc/*
+/sys/*
+/mnt/*
+/run/
+EOT
+excludes_allowed_fs_types = <<EOT
+ext2
+ext3
+reiserfs
+xfs
+jfs
+vfat
+ntfs
+EOT
+
+;
+; Each section describes a server for which a backup should be done
+;
+;
+
+[romulus.neutral-zone.de_data]
+servername = romulus.neutral-zone.de
+backup_dir = /backup/
+src_dir = /data/
+overwrite_default_excludes = yes
