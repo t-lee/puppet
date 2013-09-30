@@ -26,7 +26,7 @@ node default {
     #################################################################
     ####  STAGE: avanced
 
-#    class {'backup::client':          stage => avanced}
+    class {'backup::client':          stage => avanced}
 #    class {'nagios::target':          stage => avanced}
 #    class {'ganglia::client':         stage => avanced}  
 
