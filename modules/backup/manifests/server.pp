@@ -68,7 +68,7 @@ class backup::server {
     owner   => 'root',
     group   => 'root',
     mode    => '0600',
-    content => 'StrictHostKeyChecking no\n',
+    content => "StrictHostKeyChecking no\n",
   }
   
   file {'/var/log/backup':
