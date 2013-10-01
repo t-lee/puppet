@@ -2,11 +2,11 @@ node default {
     #################################################################
     # create stages and bring them into correct order
     stage { 'base': }
-    stage { 'avanced': }
+    stage { 'advanced': }
     stage { 'last': }
     
     Stage['base']
-    -> Stage['avanced']
+    -> Stage['advanced']
     -> Stage['main']
     -> Stage['last']
 
@@ -24,22 +24,22 @@ node default {
     #################################################################
 
     #################################################################
-    ####  STAGE: avanced
+    ####  STAGE: advanced
 
-    class {'backup::client':          stage => avanced}
+    class {'backup::client':          stage => advanced}
 
-    class {'vim': stage => avanced}
+    class {'vim': stage => advanced}
     
 #    if $fqdn == $mail_relay {
-#        class {'smarthost::server': stage => avanced}
+#        class {'smarthost::server': stage => advanced}
 #    } else {
-#        class {'smarthost::client': stage => avanced}
+#        class {'smarthost::client': stage => advanced}
 #    }
     
     if $is_virtual == 'false' {
         if $is_lxc == 'false' {
             if $fqdn != $ntp_server {
-                class {'ntp::client': stage => avanced}
+                class {'ntp::client': stage => advanced}
             }
         }
     }
