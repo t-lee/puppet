@@ -53,6 +53,21 @@ class backup::server {
     mode    => '0755',
   }
   
+  file {'/root/.ssh':
+    ensure  => 'directory',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0700',
+  }
+  
+  file {'/root/.ssh/config':
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0600',
+    content => 'StrictHostKeyChecking no\n',
+  }
+  
   file {'/var/log/backup':
     ensure  => 'directory',
     owner   => 'root',
