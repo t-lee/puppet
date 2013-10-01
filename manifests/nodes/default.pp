@@ -67,7 +67,7 @@ node default {
         groups  => ['admins'],
         require => Group['admins'],
     }
-    devbliss_user {[pi]:
+    manage_user {[pi]:
         ensure => absent,
     }
 
