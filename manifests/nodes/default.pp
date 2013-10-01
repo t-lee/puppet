@@ -44,10 +44,7 @@ node default {
         }
     }
 
-    group { 'indiecity':
-        ensure => absent,
-        stage  => advanced,
-    }
+    class { 'group::indiecity': stage  => advanced}
 
     ####  STAGE finished: advanced
     #################################################################
@@ -59,13 +56,13 @@ node default {
     class {'bashrc':}
 
     # manage sudoers
-    class {'admin-group':}
+    class {'group::admins':}
     class {'sudo':}
     sudo::conf { 'admins':
       priority => 10,
       content  => "%admins ALL=(ALL) NOPASSWD: ALL\n",
     }
-    Class['admin-group'] -> Class['sudo']
+    Class['group::admins'] -> Class['sudo']
 
     manage_user {[tommy]: 
         ensure  => present,
