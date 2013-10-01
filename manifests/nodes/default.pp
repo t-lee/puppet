@@ -44,6 +44,11 @@ node default {
         }
     }
 
+    group { 'indiecity':
+        ensure => absent,
+        stage  => advanced,
+    }
+
     ####  STAGE finished: advanced
     #################################################################
 
