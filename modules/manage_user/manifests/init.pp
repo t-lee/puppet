@@ -1,4 +1,4 @@
-define devbliss_user ($ensure = present, groups = []) {
+define manage_user ($ensure = present, groups = []) {
   $user = $title
 
   if $ensure == "absent" {
