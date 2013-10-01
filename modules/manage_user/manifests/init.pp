@@ -32,7 +32,7 @@ define manage_user ($ensure = present, groups = []) {
     
     user { $user:
       ensure     => $ensure,
-      home       => '/data/home/$user',
+      home       => "/data/home/$user",
       managehome => true,
       uid        => $id,
       shell      => '/bin/bash',
