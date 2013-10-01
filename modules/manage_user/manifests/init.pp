@@ -1,21 +1,21 @@
 define devbliss_user ($ensure = present, groups = []) {
   $user = $title
 
-#  if $ensure == "absent" {
-#    user { $user:
-#      ensure => 'absent',
-#    }
-#    group { $user:
-#      ensure => 'absent',
-#    }
-#    file { "/home/$user":
-#      ensure => 'absent',
-#      recurse => true,
-#      force => true,
-#    }
-#    User[$user] -> Group[$user] -> File["/home/$user"]
-#  } 
-#  if $ensure == "present" {
+  if $ensure == "absent" {
+    user { $user:
+      ensure => 'absent',
+    }
+    group { $user:
+      ensure => 'absent',
+    }
+    file { "/data/home/$user":
+      ensure => 'absent',
+      recurse => true,
+      force => true,
+    }
+    User[$user] -> Group[$user] -> File["/home/$user"]
+  } 
+  if $ensure == "present" {
     case $user {
       tommy: {
         $id = 1001
@@ -53,5 +53,5 @@ define devbliss_user ($ensure = present, groups = []) {
       user    => $user,
     }
     Group[$user] -> User[$user]
-#  }
+  }
 }
