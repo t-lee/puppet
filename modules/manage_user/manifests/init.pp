@@ -3,17 +3,19 @@ define manage_user ($ensure = present, groups = []) {
 
   if $ensure == "absent" {
     user { $user:
-      ensure => 'absent',
+      ensure     => 'absent',
+      managehome => true,
     }
     group { $user:
       ensure => 'absent',
     }
-    file { "/data/home/$user":
-      ensure => 'absent',
-      recurse => true,
-      force => true,
-    }
-    User[$user] -> Group[$user] -> File["/home/$user"]
+    #file { "/home/$user":
+    #  ensure => 'absent',
+    #  recurse => true,
+    #  force => true,
+    #}
+    User[$user] -> Group[$user]
+    # -> File["/home/$user"]
   } 
   if $ensure == "present" {
     case $user {
