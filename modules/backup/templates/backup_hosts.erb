@@ -9,6 +9,7 @@
 [GLOBAL]
 log_dir = /var/log/backup
 lock_file = /var/run/backup_hosts.pid
+backup_dir = /media/backup/
 max_processes = 2
 max_exectime = 480
 snapshots = 40
@@ -42,31 +43,26 @@ EOT
 
 [romulus.neutral-zone.de_data]
 servername = romulus.neutral-zone.de
-backup_dir = /backup/
 src_dir = /data/
 overwrite_default_excludes = yes
 
 [romulus.neutral-zone.de_openvpn_keys]
 servername = romulus.neutral-zone.de
-backup_dir = /backup/
 src_dir = /etc/openvpn/keys/
 overwrite_default_excludes = yes
 
 [romulus.neutral-zone.de_openvpn_iptables.rules.d]
 servername = romulus.neutral-zone.de
-backup_dir = /backup/
 src_dir = /etc/openvpn/iptables.rules.d/
 overwrite_default_excludes = yes
 
 [romulus.neutral-zone.de_openvpn_ccd]
 servername = romulus.neutral-zone.de
-backup_dir = /backup/
 src_dir = /etc/openvpn/ccd/
 overwrite_default_excludes = yes
 
 [romulus.neutral-zone.de_root_pwd]
 servername = romulus.neutral-zone.de
-backup_dir = /backup/
 src_dir = /root/pwd*
 overwrite_default_excludes = yes
 
