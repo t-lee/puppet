@@ -10,8 +10,10 @@
 #   include backup::server
 #
 class backup::server {
+  ## needed by /usr/bin/backup_hosts.pl
+  include perl::libmime-lite-perl
+
   package { [
-      libmime-lite-perl,
       libproc-processtable-perl,
       libparallel-forkmanager-perl,
       libconfig-inifiles-perl,
@@ -27,6 +29,7 @@ class backup::server {
     group   => 'root',
     mode    => '0755',
     source  => "puppet:///modules/backup/usr/bin/backup_hosts.pl",
+    require => Package['libmime-lite-perl'],
   }
 
   file {'/etc/cron.d/devbliss-backup':

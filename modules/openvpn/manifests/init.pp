@@ -1,4 +1,7 @@
 class openvpn {
+    ## needed by /etc/openvpn/easy-rsa/mail-file.pl
+    include perl::libmime-lite-perl
+
     package { 'ruby1.9.1':
         ensure => present,
     }
@@ -37,11 +40,6 @@ class openvpn {
     }
 
     package { ['openvpn','pwgen','zip']:
-        ensure => present,
-    }
-
-    ## needed by /etc/openvpn/easy-rsa/mail-file.pl
-    package { 'libmime-lite-perl':
         ensure => present,
     }
 
