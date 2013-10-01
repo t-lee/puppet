@@ -1,0 +1,2 @@
+backup  -fstype=ext4    :/dev/sda1
+

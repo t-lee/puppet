@@ -3,22 +3,22 @@ class autofs {
         ensure => 'present'
     }
 
-    file { '/etc/auto.master.d/':
-        ensure  => 'directory',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '755',
-        require => Package['autofs'],
-    }
-
-    file { '/etc/auto.master.d/backup.autofs':
-        ensure  => present,
+    file { '/etc/auto.master':
+        ensure  => 'present',
         owner   => 'root',
         group   => 'root',
         mode    => '644',
-        require => File['/etc/auto.master.d/'],
-        content => "backup           -fstype=ext4            :/dev/sda1\n",
-        notify  => Service['autofs'],
+        source  => 'puppet:///modules/autofs/auto.master',
+        require => Package['autofs'],
+    }
+
+    file { '/etc/auto.media':
+        ensure  => 'present',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '644',
+        source  => 'puppet:///modules/autofs/auto.media',
+        require => Package['autofs'],
     }
 
     service { 'autofs':
