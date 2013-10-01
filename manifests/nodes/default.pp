@@ -45,6 +45,7 @@ node default {
     }
 
     class { 'group::indiecity': stage  => advanced}
+    class { 'dir::data':        stage  => advanced}
 
     ####  STAGE finished: advanced
     #################################################################
