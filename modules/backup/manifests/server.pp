@@ -32,21 +32,21 @@ class backup::server {
     require => Package['libmime-lite-perl'],
   }
 
-  file {'/etc/cron.d/devbliss-backup':
+  file {'/etc/cron.d/backup':
     ensure  => 'present',
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    source  => "puppet:///modules/backup/etc/cron.d/devbliss-backup",
+    source  => "puppet:///modules/backup/etc/cron.d/backup",
     notify  => Service['cron'],
   }
 
-  file {'/etc/logrotate.d/devbliss-backup':
+  file {'/etc/logrotate.d/backup':
     ensure  => 'present',
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    source  => "puppet:///modules/backup/etc/logrotate.d/devbliss-backup",
+    source  => "puppet:///modules/backup/etc/logrotate.d/backup",
   }
 
   file {'/etc/backup':
