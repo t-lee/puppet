@@ -27,8 +27,6 @@ node default {
     ####  STAGE: avanced
 
     class {'backup::client':          stage => avanced}
-#    class {'nagios::target':          stage => avanced}
-#    class {'ganglia::client':         stage => avanced}  
 
     class {'vim': stage => avanced}
     
@@ -56,22 +54,22 @@ node default {
     class {'bashrc':}
 
     # manage sudoers
-#    class {'devbliss::admin-group':}
-#    class {'sudo':}
-#    sudo::conf { 'admins':
-#      priority => 10,
-#      content  => "%admins ALL=(ALL) NOPASSWD: ALL\n",
-#    }
-#    Group['admins'] -> Class['sudo']
+    class {'admin-group':}
+    class {'sudo':}
+    sudo::conf { 'admins':
+      priority => 10,
+      content  => "%admins ALL=(ALL) NOPASSWD: ALL\n",
+    }
+    Class['admin-group'] -> Class['sudo']
 
-#    devbliss_user {[tboehme,ujanssen]: 
-#        ensure  => present,
-#        groups  => ['admins'],
-#        require => Group['admins'],
-#    }
-#    devbliss_user {[njuenemann,ojohn]:
-#        ensure => absent,
-#    }
+    manage_user {[tommy]: 
+        ensure  => present,
+        groups  => ['admins'],
+        require => Group['admins'],
+    }
+    devbliss_user {[pi]:
+        ensure => absent,
+    }
 
     class {'cron':}
 
