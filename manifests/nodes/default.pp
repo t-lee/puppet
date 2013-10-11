@@ -17,7 +17,7 @@ node default {
     class {'hosts':    stage => base}
     class {'hostname': stage => base}
 
-    class {'apt::update':  stage => base}
+#    class {'apt::update':  stage => base}
 #    class {'exec-locks':   stage => base}
     
     ####  STAGE finished: base
