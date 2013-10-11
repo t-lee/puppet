@@ -13,4 +13,4 @@ abuse:		postmaster
 spam:		postmaster
 
 # Other aliases
-root:		root@spreegle.de
+root:		tommy
