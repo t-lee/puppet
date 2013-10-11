@@ -358,7 +358,7 @@ sub read_config {
     }
     $config{"GLOBAL"}{"log_dir"} =~ s/\/+$//;
 
-    $config{"GLOBAL"}{"backup_dir"} = $ini->val("GLOBAL","backup_dir") if ( defined($ini->val("GLOBAL","backup_dir")) and lenght($ini->val("GLOBAL","backup_dir")));
+    $config{"GLOBAL"}{"backup_dir"} = $ini->val("GLOBAL","backup_dir") if ( defined($ini->val("GLOBAL","backup_dir")) and length($ini->val("GLOBAL","backup_dir")));
     $config{"GLOBAL"}{"backup_dir"} =~ s/\/+$// if defined $config{"GLOBAL"}{"backup_dir"};
 
     $config{"GLOBAL"}{"dest_dir"} = "/".$config{"GLOBAL"}{"dest_dir"};
