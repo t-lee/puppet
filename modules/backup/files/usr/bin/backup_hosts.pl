@@ -349,7 +349,7 @@ sub read_config {
     for my $section (@sections) {
         if ($section eq "GLOBAL") {
 
-	    for my $param ("log_dir","lock_file","max_processes","max_exectime","snapshots","src_dir","dest_dir","rsync_options","remote_user","exclude","relative","backup_dir") {
+	    for my $param ("log_dir","lock_file","max_processes","max_exectime","snapshots","src_dir","dest_dir","rsync_options","remote_user","exclude","relative") {
 	        $config{"GLOBAL"}{$param} = $ini->val($section,$param);
 	        &alert("global parameter $param is missing or not well formed, please check config",$alertlevel,1) if (!defined $config{"GLOBAL"}{$param} or !length $config{"GLOBAL"}{$param});
 	    }
@@ -357,6 +357,8 @@ sub read_config {
 	}
     }
     $config{"GLOBAL"}{"log_dir"} =~ s/\/+$//;
+
+    $config{"GLOBAL"}{"backup_dir"} = $ini->val("GLOBAL","backup_dir") if ( defined($ini->val("GLOBAL","backup_dir")) and lenght($ini->val("GLOBAL","backup_dir")));
     $config{"GLOBAL"}{"backup_dir"} =~ s/\/+$// if defined $config{"GLOBAL"}{"backup_dir"};
 
     $config{"GLOBAL"}{"dest_dir"} = "/".$config{"GLOBAL"}{"dest_dir"};
