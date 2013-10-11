@@ -36,10 +36,11 @@ class smarthost {
   }
         
   file { "/etc/aliases":
-    owner => "root",
-    group => "root",
-    mode => 0644,
-    source => "puppet:///modules/smarthost/aliases",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    source  => "puppet:///modules/smarthost/aliases",
     require => Package["postfix"],
   }
 }
