@@ -27,33 +27,29 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 # See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
 # information on enabling SSL in the smtp client.
 
-#myhostname = mail.spreegle.de
-myhostname = mail.spreegle.de
-virtual_alias_maps = hash:/etc/postfix/virtual
+myhostname = romulus.neutral-zone.de
 alias_maps = hash:/etc/aliases
-smtp_generic_maps = regexp:/etc/postfix/generic
 alias_database = hash:/etc/aliases
-myorigin = spreegle.de
-mydestination = $mydomain
-#mydestination = 
-relay_domains = 
-#mynetworks = $config_directory/mynetworks
-mynetworks = 127.0.0.0/8
-             10.15.124.0/23
-             10.15.126.0/24
-             10.15.127.0/24
-             10.15.128.0/23
-
+myorigin = $myhostname
+mydestination = $myhostname, $myorigin, localhost, neutral-zone.de
+relayhost = [mail.gmx.net]
+relay_domains =
+mynetworks = 127.0.0.0/8 192.168.0.0/24
+home_mailbox = Maildir/
 #mailbox_command = procmail -a "$EXTENSION"
-#mailbox_size_limit = 0
+mailbox_command =
+mailbox_size_limit = 0
 recipient_delimiter = +
-inet_interfaces = all
-proxy_interfaces = 46.231.176.228
 
-smtpd_recipient_restrictions =
-        reject_non_fqdn_sender,
-        reject_non_fqdn_recipient,
-        permit_mynetworks,
-        reject_unauth_destination
+##inet_interfaces = all
+##proxy_interfaces = WW.XX.YY.ZZ
 
+##smtpd_recipient_restrictions =
+##        reject_non_fqdn_sender,
+##        reject_non_fqdn_recipient,
+##        permit_mynetworks,
+##        reject_unauth_destination
+
+sender_canonical_classes = envelope_sender
+sender_canonical_maps = hash:/etc/postfix/canonical-sender
 
