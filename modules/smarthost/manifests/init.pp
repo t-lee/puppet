@@ -27,21 +27,21 @@ class smarthost {
   }
   
   # Rerun newaliases and restart postfix if aliases updated.
-  exec { newaliases: 
-    command     => "/usr/bin/newaliases",
-  	refreshonly => true,
-  	path        => ['/usr/bin','/usr/sbin'], 
-    subscribe   => File["/etc/aliases"],
-    notify      => Service["postfix"],
-  }
+#  exec { newaliases: 
+#    command     => "/usr/bin/newaliases",
+#  	refreshonly => true,
+#  	path        => ['/usr/bin','/usr/sbin'], 
+#    subscribe   => File["/etc/aliases"],
+#    notify      => Service["postfix"],
+#  }
         
-  file { "/etc/aliases":
-    ensure  => present,
-    owner   => "root",
-    group   => "root",
-    mode    => 0644,
-    source  => "puppet:///modules/smarthost/aliases",
-    require => Package["postfix"],
-  }
+#  file { "/etc/aliases":
+#    ensure  => present,
+#    owner   => "root",
+#    group   => "root",
+#    mode    => 0644,
+#    source  => "puppet:///modules/smarthost/aliases",
+#    require => Package["postfix"],
+#  }
 }
 
