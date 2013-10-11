@@ -5,13 +5,13 @@ class courier-imap {
 
     service { 'courier-imap':
         ensure  => stopped,
-        enabled => true,
+        enable  => true,
         require => [Package['courier-imap-ssl'],File['/etc/courier/imapd']],
     }
 
     service { 'courier-imap-ssl':
         ensure  => started,
-        enabled => true,
+        enable  => true,
         require => Package['courier-imap-ssl'],
     }
 
