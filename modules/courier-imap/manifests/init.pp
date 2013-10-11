@@ -10,7 +10,7 @@ class courier-imap {
     }
 
     service { 'courier-imap-ssl':
-        ensure  => started,
+        ensure  => running,
         enable  => true,
         require => Package['courier-imap-ssl'],
     }
