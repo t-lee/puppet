@@ -32,6 +32,14 @@ class backup::server {
     require => Package['libmime-lite-perl'],
   }
 
+  file {'/usr/bin/analyse-backup.pl':
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source  => "puppet:///modules/backup/usr/bin/analyse-backup.pl",
+  }
+
   file {'/etc/cron.d/backup':
     ensure  => 'present',
     owner   => 'root',
