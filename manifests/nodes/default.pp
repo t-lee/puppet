@@ -73,7 +73,7 @@ node default {
         managehome => true,
     }
     manage_user {[pi]:
-        ensure => present,
+        ensure => absent,
         managehome => true,
     }
 
