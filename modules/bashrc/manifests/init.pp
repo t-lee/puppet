@@ -1,10 +1,10 @@
 class bashrc {
-  file { '/etc/profile.d/romulus.bashrc.sh':
+  file { '/etc/profile.d/extra.bashrc.sh':
     ensure => present,
     owner  => "root",
     group  => "root",
     mode   => 755,
-    source => "puppet://$puppetserver/modules/bashrc/romulus.bashrc.sh";
+    source => "puppet:///modules/bashrc/extra.bashrc.sh";
   }
 
 }
