@@ -20,8 +20,13 @@ class smarthost::server {
       require => Package["postfix"],
     }
 
+    file { "/etc/postfix/canonical-sender.db":
+      ensure  => present,
+      require => Package["postfix"],
+    }
+
     exec { "postmap /etc/postfix/canonical-sender":
-      subscribe   => File["/etc/postfix/canonical-sender"],
+      subscribe   => File["/etc/postfix/canonical-sender","/etc/postfix/canonical-sender.db"],
       refreshonly => true,
       path        => ["/usr/bin", "/usr/sbin"],
       notify      => Service["postfix"],
