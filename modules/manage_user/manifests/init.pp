@@ -1,10 +1,9 @@
-define manage_user ($ensure = present, managehome = false, groups = []) {
+define manage_user ($ensure = present, groups = []) {
   $user = $title
 
   if $ensure == "absent" {
     user { $user:
       ensure     => 'absent',
-      managehome => $managehome,
     }
     group { $user:
       ensure  => 'absent',
@@ -39,7 +38,7 @@ define manage_user ($ensure = present, managehome = false, groups = []) {
     user { $user:
       ensure     => $ensure,
       home       => "/data/home/$user",
-      managehome => $managehome,
+      managehome => true,
       uid        => $id,
       shell      => '/bin/bash',
       gid        => $user,

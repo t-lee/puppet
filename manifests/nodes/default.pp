@@ -67,14 +67,12 @@ node default {
     Class['group::admins'] -> Class['sudo']
 
     manage_user {[tommy]: 
-        ensure  => absent,
+        ensure  => present,
         groups  => ['admins'],
         require => Group['admins'],
-        managehome => true,
     }
     manage_user {[pi]:
         ensure => absent,
-        managehome => true,
     }
 
     class {'cron':}
