@@ -20,7 +20,7 @@ class smarthost::server {
       require => Package["postfix"],
     }
 
-    exec { "postmap canonical-sender":
+    exec { "postmap /etc/postfix/canonical-sender":
       subscribe   => File["/etc/postfix/canonical-sender"],
       refreshonly => true,
       path        => ["/usr/bin", "/usr/sbin"],
