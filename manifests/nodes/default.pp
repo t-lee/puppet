@@ -28,8 +28,9 @@ node default {
 
     class {'backup::client':          stage => advanced}
 
-    class {'vim': stage => advanced}
-    
+    class {'vim':  stage => advanced}
+    class {'skel': stage  => advanced}
+
     if $fqdn == $mail_relay {
         class {'smarthost::server': stage => advanced}
     } else {
