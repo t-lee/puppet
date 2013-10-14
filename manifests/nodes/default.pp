@@ -69,6 +69,7 @@ node default {
         ensure  => absent,
         groups  => ['admins'],
         require => Group['admins'],
+        managehome => true,
     }
     manage_user {[pi]:
         ensure => present,
