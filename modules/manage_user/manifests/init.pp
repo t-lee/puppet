@@ -1,21 +1,21 @@
-define manage_user ($ensure = present, groups = []) {
+define manage_user ($ensure = present, managehome = false, groups = []) {
   $user = $title
 
   if $ensure == "absent" {
     user { $user:
       ensure     => 'absent',
-      managehome => true,
+      managehome => $managehome,
     }
     group { $user:
-      ensure => 'absent',
+      ensure  => 'absent',
+      require => User[$user], 
     }
     #file { "/home/$user":
-    #  ensure => 'absent',
+    #  ensure  => 'absent',
     #  recurse => true,
-    #  force => true,
+    #  force   => true,
+    #  require => Group[$user], 
     #}
-    User[$user] -> Group[$user]
-    # -> File["/home/$user"]
   } 
   if $ensure == "present" {
     case $user {
@@ -33,7 +33,7 @@ define manage_user ($ensure = present, groups = []) {
     user { $user:
       ensure     => $ensure,
       home       => "/data/home/$user",
-      managehome => true,
+      managehome => $managehome,
       uid        => $id,
       shell      => '/bin/bash',
       gid        => $user,
