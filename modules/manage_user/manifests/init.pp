@@ -53,12 +53,14 @@ define manage_user ($ensure = present, managehome = false, groups = []) {
       system     => false,
     }
 
-    ssh_authorized_key { $user:
-      ensure  => $ensure,
-      name    => $ssh_keyname,
-      type    => $ssh_type,
-      key     => $ssh_key,
-      user    => $user,
+    if $ssh_key != "" and $ssh_type != "" and $ssh_keyname != "" {
+      ssh_authorized_key { $user:
+        ensure  => $ensure,
+        name    => $ssh_keyname,
+        type    => $ssh_type,
+        key     => $ssh_key,
+        user    => $user,
+      }
     }
     Group[$user] -> User[$user]
   }
