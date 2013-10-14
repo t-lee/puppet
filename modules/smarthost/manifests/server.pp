@@ -2,36 +2,29 @@ class smarthost::server {
     include smarthost
 
     file { "/etc/postfix/main.cf":
-      owner => "root",
-      group => "root",
-      mode => 0644,
-      source => "puppet:///modules/smarthost/main.cf",
+      ensure  => present,
+      owner   => "root",
+      group   => "root",
+      mode    => 0644,
+      source  => "puppet:///modules/smarthost/main.cf",
       require => Package["postfix"],
-      notify  => Service["postfix"];
-    }
-    file { "/etc/postfix/virtual":
-      owner => "root",
-      group => "root",
-      mode => 0644,
-      source => "puppet:///modules/smarthost/virtual",
-    }
-    exec { "postmap virtual":
-      subscribe   => File["/etc/postfix/virtual"],
-      refreshonly => true,
-      path => ["/usr/bin", "/usr/sbin"],
       notify  => Service["postfix"],
     }
-    file { "/etc/postfix/generic":
-      owner => "root",
-      group => "root",
-      mode => 0644,
-      source => "puppet:///modules/smarthost/generic",
+
+    file { "/etc/postfix/canonical-sender":
+      ensure  => present,
+      owner   => "root",
+      group   => "root",
+      mode    => 0644,
+      source  => "puppet:///modules/smarthost/canonical-sender",
+      require => Package["postfix"],
     }
-    exec { "postmap generic":
-      subscribe   => File["/etc/postfix/generic"],
+
+    exec { "postmap canonical-sender":
+      subscribe   => File["/etc/postfix/canonical-sender"],
       refreshonly => true,
-      path => ["/usr/bin", "/usr/sbin"],
-      notify  => Service["postfix"],
+      path        => ["/usr/bin", "/usr/sbin"],
+      notify      => Service["postfix"],
     }
 }
 

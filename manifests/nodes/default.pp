@@ -30,11 +30,11 @@ node default {
 
     class {'vim': stage => advanced}
     
-#    if $fqdn == $mail_relay {
-#        class {'smarthost::server': stage => advanced}
-#    } else {
-#        class {'smarthost::client': stage => advanced}
-#    }
+    if $fqdn == $mail_relay {
+        class {'smarthost::server': stage => advanced}
+    } else {
+        class {'smarthost': stage => advanced}
+    }
     
     if $is_virtual == 'false' {
         if $is_lxc == 'false' {
