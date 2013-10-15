@@ -1,4 +1,4 @@
-node 'romulus.neutral-zone.de' inherits default {
+node 'sha-ka-ree.neutral-zone.de' inherits default {
     class {'openvpn':}
     class {'backup::server':}
     class {'autofs':}
