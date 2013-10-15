@@ -10,8 +10,8 @@ key = <% key -%>
   'user' = '<%= value_hash['user'] %>',
   'pass' = '<%= value_hash['pass'] %>',
   'opt' = '<%= value_hash['opt'] %>',
-poll <% server -%> with proto POP3
-       user '<% user -%>' there with password '<% pass -%>' is 'tommy@neutral-zone.de' here options <% opt -%> ;
+poll <% value_hash['server'] -%> with proto POP3
+       user '<% value_hash['user'] -%>' there with password '<% value_hash['pass'] -%>' is 'tommy@neutral-zone.de' here options <% value_hash['opt'] -%> ;
 
 <% end -%>
 
