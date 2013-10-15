@@ -1,0 +1,17 @@
+$TTL 3600
+@       86400       IN      SOA     localhost. root.localhost.  (
+                                      2013101501 ; Serial
+                                      3600      ; Refresh
+                                      360       ; Retry
+                                      604800     ; Expire
+                                      86400 )    ; Minimum
+        IN      NS      localhost.
+
+1       IN      PTR     kd-router.neutral-zone.de.
+2       IN      PTR     fritz-box.neutral-zone.de.
+3       IN      PTR     romulus.neutral-zone.de.
+4       IN      PTR     sha-ka-ree.neutral-zone.de.
+
+99      IN      PTR     printer.neutral-zone.de.
+
+
