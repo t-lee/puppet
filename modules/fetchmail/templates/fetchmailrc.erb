@@ -4,7 +4,7 @@ set daemon 60
 
 #set logfile /var/log/fetchmail
 
-<% @fetchmail.account.each_pair do |key, value_hash| -%>
+<% @fetchmail_data.account.each_pair do |key, value_hash| -%>
 key = <% key -%> 
   'server' = '<%= value_hash['server'] %>',
   'user' = '<%= value_hash['user'] %>',
