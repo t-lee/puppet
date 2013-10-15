@@ -1,0 +1,17 @@
+# Configuration created Wed Oct  9 12:36:12 2002 by fetchmailconf
+set daemon 60
+# Edit carefully, see /usr/share/doc/packages/yast2-config-mail/fetchmailrc.txt
+
+#set logfile /var/log/fetchmail
+
+<% @fetchmail.account.each_pair do |key, value_hash| -%>
+key = <% key -%> 
+  'server' = '<%= value_hash['server'] %>',
+  'user' = '<%= value_hash['user'] %>',
+  'pass' = '<%= value_hash['pass'] %>',
+  'opt' = '<%= value_hash['opt'] %>',
+poll <% server -%> with proto POP3
+       user '<% user -%>' there with password '<% pass -%>' is 'tommy@neutral-zone.de' here options <% opt -%> ;
+
+<% end -%>
+
