@@ -5,11 +5,6 @@ set daemon 60
 #set logfile /var/log/fetchmail
 
 <% @fetchmail_data['account'].each_pair do |key, value_hash| -%>
-key = <%= key %> 
-  'server' = '<%= value_hash['server'] %>',
-  'user' = '<%= value_hash['user'] %>',
-  'pass' = '<%= value_hash['pass'] %>',
-  'opt' = '<%= value_hash['opt'] %>',
 poll <%= value_hash['server'] %> with proto POP3
        user '<%= value_hash['user'] %>' there with password '<%= value_hash['pass'] %>' is 'tommy@neutral-zone.de' here options <%= value_hash['opt'] %> ;
 
