@@ -4,4 +4,5 @@ node 'sha-ka-ree.neutral-zone.de' inherits default {
     class {'autofs':}
     class {'courier-imap':}
     class {'fetchmail':}
+    class {'bind':}
 }
