@@ -11,7 +11,7 @@ class fetchmail {
 
     file { '/etc/fetchmailrc':
         ensure  => 'present',
-        owner   => 'root',
+        owner   => 'fetchmail',
         group   => 'root',
         mode    => '0600',
         content => template("fetchmail/fetchmailrc.erb"),
