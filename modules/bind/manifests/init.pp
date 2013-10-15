@@ -6,12 +6,29 @@ class bind {
     service { 'bind9':
         ensure  => running,
         enable  => true,
-        require => Package['bind9'],
     }
 
-#    file { '/etc/courier/imapd':
-#        ensure => present,
-#        source => 'puppet:///modules/courier-imap/etc/courier/imapd',
-#        notify => Service['courier-imap'],
-#    }
+    file { '/etc/bind/named.conf.options':
+        ensure  => present,
+        source  => 'puppet:///modules/bind/etc/bind/named.conf.options',
+        notify  => Service['bind9'],
+        before  => Service['bind9'],
+        require => Package['bind9'], 
+    }
+
+    file { '/etc/bind/named.conf.local':
+        ensure  => present,
+        source  => 'puppet:///modules/bind/etc/bind/named.conf.local',
+        notify  => Service['bind9'],
+        before  => Service['bind9'],
+        require => Package['bind9'], 
+    }
+
+    file { '/etc/bind/db.0.168.192':
+        ensure  => present,
+        source  => 'puppet:///modules/bind/etc/bind/db.0.168.192',
+        notify  => Service['bind9'],
+        before  => Service['bind9'],
+        require => Package['bind9'], 
+    }
 }
