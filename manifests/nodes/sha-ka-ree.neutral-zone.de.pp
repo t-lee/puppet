@@ -3,4 +3,5 @@ node 'sha-ka-ree.neutral-zone.de' inherits default {
     class {'backup::server':}
     class {'autofs':}
     class {'courier-imap':}
+    class {'fetchmail':}
 }
