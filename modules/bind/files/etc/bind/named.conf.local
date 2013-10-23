@@ -7,3 +7,5 @@
 //include "/etc/bind/zones.rfc1918";
 
 zone "0.168.192.in-addr.arpa" { type master; file "/etc/bind/db.0.168.192"; }; 
+zone "neutral-zone.de" { type master; file "/etc/bind/db.neutral-zone.de"; };
+

@@ -1,0 +1,16 @@
+$TTL 3600
+@       86400   IN      SOA     localhost. root.localhost. (
+                                1     ; Serial
+                                3600      ; Refresh
+                                360       ; Retry
+                                604800     ; Expire
+                                86400 )    ; Minimum
+
+                IN      NS      localhost.
+;		IN	MX	10 qonos
+router		IN	A	192.168.0.1
+fritzbox	IN	A	192.168.0.2
+romulus		IN	A	192.168.0.3
+sha-ka-ree	IN	A	192.168.0.4
+printer		IN	A	192.168.0.99
+

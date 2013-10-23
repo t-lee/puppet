@@ -24,6 +24,14 @@ class bind {
         require => Package['bind9'], 
     }
 
+    file { '/etc/bind/db.neutral-zone.de':
+        ensure  => present,
+        source  => 'puppet:///modules/bind/etc/bind/db.neutral-zone.de',
+        notify  => Service['bind9'],
+        before  => Service['bind9'],
+        require => Package['bind9'], 
+    }
+
     file { '/etc/bind/db.0.168.192':
         ensure  => present,
         source  => 'puppet:///modules/bind/etc/bind/db.0.168.192',
