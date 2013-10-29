@@ -8,4 +8,4 @@ export LC_ALL=C
 #OPTIONS='-v'
 
 # Declare here if we want to start fetchmail. 'yes' or 'no'
-START_DAEMON=no
+START_DAEMON=yes
