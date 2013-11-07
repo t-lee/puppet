@@ -1,6 +1,14 @@
 class courier-imap {
-    package { 'courier-imap-ssl':
+    # gamin is needed to get rid of these errors in email client:
+    #   Filesystem notification initialization error -- contact your mail
+    #   administrator (check for configuration errors with the FAM/Gamin library)
+    package { 'gamin':
         ensure => present,
+    }
+
+    package { 'courier-imap-ssl':
+        ensure  => present,
+        require => Package['gamin'],
     }
 
     service { 'courier-imap':
