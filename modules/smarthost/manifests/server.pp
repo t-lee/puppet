@@ -31,5 +31,26 @@ class smarthost::server {
       path        => ["/usr/bin", "/usr/sbin"],
       notify      => Service["postfix"],
     }
+
+    file { "/etc/postfix/virtual":
+      ensure  => present,
+      owner   => "root",
+      group   => "root",
+      mode    => 0644,
+      source  => "puppet:///modules/smarthost/virtual",
+      require => Package["postfix"],
+    }
+
+    file { "/etc/postfix/virtual.db":
+      ensure  => present,
+      require => Package["postfix"],
+    }
+
+    exec { "postmap /etc/postfix/virtual":
+      subscribe   => File["/etc/postfix/virtual","/etc/postfix/virtual.db"],
+      refreshonly => true,
+      path        => ["/usr/bin", "/usr/sbin"],
+      notify      => Service["postfix"],
+    }
 }
 
