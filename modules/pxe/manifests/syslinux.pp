@@ -5,9 +5,16 @@ class pxe::syslinux {
         ensure  => present,
     }
 
-    file { '/var/lib/tftpboot/pxelinux.0'
+    file { '/var/lib/tftpboot/pxelinux.0':
         ensure  => link,
         target  => '/usr/lib/syslinux/pxelinux.0'
+        require => File['/var/lib/tftpboot'],
+        require => Package['syslinux-common'],
+    }
+
+    file { '/var/lib/tftpboot/vesamenu.c32':
+        ensure  => link,
+        target  => '/usr/lib/syslinux/vesamenu.c32'
         require => File['/var/lib/tftpboot'],
         require => Package['syslinux-common'],
     }
@@ -19,6 +26,15 @@ class pxe::syslinux {
         mode    => 755,
         require => File['/var/lib/tftpboot'],
         require => Package['syslinux-common'],
+    }
+
+    file { '/var/lib/tftpboot/pxelinux.cfg/logo.png':
+        ensure  => present,
+        owner   => 'root',
+        group   => 'root',
+        mode    => 644,
+        source  => "puppet://$puppetserver/modules/pxe/var/lib/tftpboot/pxelinux.cfg/logo.png",
+        require => File['/var/lib/tftpboot/pxelinux.cfg'],
     }
 
 }
