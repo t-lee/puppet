@@ -37,4 +37,13 @@ class pxe::syslinux {
         require => File['/var/lib/tftpboot/pxelinux.cfg'],
     }
 
+    file { '/var/lib/tftpboot/pxelinux.cfg/default':
+        ensure  => present,
+        owner   => 'root',
+        group   => 'root',
+        mode    => 644,
+        source  => "puppet://$puppetserver/modules/pxe/var/lib/tftpboot/pxelinux.cfg/default",
+        require => File['/var/lib/tftpboot/pxelinux.cfg'],
+    }
+
 }
