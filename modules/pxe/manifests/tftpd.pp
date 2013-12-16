@@ -23,7 +23,6 @@ class pxe::tftpd {
     service {'tftpd-hpa':
         ensure => running,
         enable => true,
-        require => Package['tftpd-hpa'],
-        require => File['/var/lib/tftpboot'],
+        require => [Package['tftpd-hpa'],File['/var/lib/tftpboot']],
     }
 }
