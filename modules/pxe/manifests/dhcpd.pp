@@ -8,7 +8,7 @@ class pxe::dhcpd {
         owner   => 'root',
         group   => 'root',
         mode    => 644,
-        source  => "puppet://$puppetserver/modules/dhcpd/etc/dhcp/dhcpd.conf",
+        source  => "puppet://$puppetserver/modules/pxe/etc/dhcp/dhcpd.conf",
         require => Package['isc-dhcp-server'],
         notify  => Service['isc-dhcp-server'],
     }
