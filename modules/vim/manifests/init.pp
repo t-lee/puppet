@@ -6,7 +6,7 @@ class vim {
         owner   => 'root',
         group   => 'root',
         mode    => 644,
-        source  => "puppet://$puppetserver/modules/vim/vimrc.local",
+        source  => "puppet:///modules/vim/vimrc.local",
         require => Package['vim'],
     }
 }

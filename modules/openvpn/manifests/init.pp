@@ -11,7 +11,7 @@ class openvpn {
         owner   => 'root',
         group   => 'root',
         mode    => 755,
-        source  => "puppet://$puppetserver/modules/openvpn/usr/bin/cert_check",
+        source  => "puppet:///modules/openvpn/usr/bin/cert_check",
         require => Package['ruby1.9.1'],
     }
 
@@ -20,7 +20,7 @@ class openvpn {
         owner   => 'root',
         group   => 'root',
         mode    => 644,
-        source  => "puppet://$puppetserver/modules/openvpn/etc/cron.d/cert_check",
+        source  => "puppet:///modules/openvpn/etc/cron.d/cert_check",
         notify  => Service['cron'],
     }
 
@@ -29,7 +29,7 @@ class openvpn {
         owner   => 'root',
         group   => 'root',
         mode    => 755,
-        source  => "puppet://$puppetserver/modules/openvpn/etc/init.d/firewall",
+        source  => "puppet:///modules/openvpn/etc/init.d/firewall",
         require => File['/etc/openvpn/iptables.rules.d'],
     }
 
@@ -48,7 +48,7 @@ class openvpn {
         owner   => 'root',
         group   => 'root',
         mode    => 644,
-        source  => "puppet://$puppetserver/modules/openvpn/etc/openvpn/openvpn.conf",
+        source  => "puppet:///modules/openvpn/etc/openvpn/openvpn.conf",
         require => Package['openvpn'],
     }
 
@@ -57,7 +57,7 @@ class openvpn {
         owner   => 'root',
         group   => 'root',
         mode    => 644,
-        source  => "puppet://$puppetserver/modules/openvpn/etc/openvpn/client.ovpn.tpl",
+        source  => "puppet:///modules/openvpn/etc/openvpn/client.ovpn.tpl",
         require => Package['openvpn'],
     }
 
@@ -67,7 +67,7 @@ class openvpn {
         group   => 'root',
         recurse => true,
         replace => false,
-        source  => "puppet://$puppetserver/modules/openvpn/etc/openvpn/ccd",
+        source  => "puppet:///modules/openvpn/etc/openvpn/ccd",
         require => Package['openvpn'],
     }
 
@@ -83,7 +83,7 @@ class openvpn {
         ensure  => present,
         owner   => 'root',
         group   => 'root',
-        source  => "puppet://$puppetserver/modules/openvpn/etc/openvpn/easy-rsa",
+        source  => "puppet:///modules/openvpn/etc/openvpn/easy-rsa",
         recurse => true,
         require => Package['openvpn','pwgen','zip'],
     }
@@ -92,7 +92,7 @@ class openvpn {
         ensure  => present,
         owner   => 'root',
         group   => 'root',
-        source  => "puppet://$puppetserver/modules/openvpn/etc/openvpn/iptables.rules.d",
+        source  => "puppet:///modules/openvpn/etc/openvpn/iptables.rules.d",
         recurse => true,
         require => Package['openvpn'],
     }

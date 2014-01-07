@@ -30,7 +30,7 @@ class pxe::syslinux {
         owner   => 'root',
         group   => 'root',
         mode    => 644,
-        source  => "puppet://$puppetserver/modules/pxe/var/lib/tftpboot/pxelinux.cfg/logo.png",
+        source  => "puppet:///modules/pxe/var/lib/tftpboot/pxelinux.cfg/logo.png",
         require => File['/var/lib/tftpboot/pxelinux.cfg'],
     }
 
@@ -39,7 +39,7 @@ class pxe::syslinux {
         owner   => 'root',
         group   => 'root',
         mode    => 644,
-        source  => "puppet://$puppetserver/modules/pxe/var/lib/tftpboot/pxelinux.cfg/default",
+        source  => "puppet:///modules/pxe/var/lib/tftpboot/pxelinux.cfg/default",
         require => File['/var/lib/tftpboot/pxelinux.cfg'],
     }
 
@@ -48,7 +48,7 @@ class pxe::syslinux {
         owner   => 'root',
         group   => 'root',
         mode    => 644,
-        source  => "puppet://$puppetserver/modules/pxe/var/lib/tftpboot/pxelinux.cfg/pxe.conf",
+        source  => "puppet:///modules/pxe/var/lib/tftpboot/pxelinux.cfg/pxe.conf",
         require => File['/var/lib/tftpboot/pxelinux.cfg'],
     }
 

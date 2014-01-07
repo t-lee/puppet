@@ -8,7 +8,7 @@ class pxe::tftpd {
         owner   => 'root',
         group   => 'root',
         mode    => 644,
-        source  => "puppet://$puppetserver/modules/pxe/etc/default/tftpd-hpa",
+        source  => "puppet:///modules/pxe/etc/default/tftpd-hpa",
         before => Package['tftpd-hpa'],
         notify  => Service['tftpd-hpa'],
     }
