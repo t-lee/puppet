@@ -38,10 +38,8 @@ node default {
     }
     
     if $is_virtual == 'false' {
-        if $is_lxc == 'false' {
-            if $fqdn != $ntp_server {
-                class {'ntp::client': stage => advanced}
-            }
+        if $fqdn != $ntp_server {
+            class {'ntp::client': stage => advanced}
         }
     }
 
