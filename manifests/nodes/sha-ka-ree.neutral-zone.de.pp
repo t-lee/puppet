@@ -6,4 +6,5 @@ node 'sha-ka-ree.neutral-zone.de' inherits default {
     class {'fetchmail':}
     class {'bind':}
     class {'pxe':}
+    class {'nfs':}
 }
