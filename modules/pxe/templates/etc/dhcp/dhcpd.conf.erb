@@ -7,7 +7,7 @@ ddns-update-style none;
 # option definitions common to all supported networks...
 option domain-name "<%= @domain_name %>";
 option domain-name-servers <%= @domain_name_servers %>;
-option subnet-mask <%= @subnet_maks %>;
+option subnet-mask <%= @subnet_mask %>;
 
 default-lease-time 21600;
 max-lease-time 86400;
@@ -29,7 +29,7 @@ allow bootp;
 
 
 subnet <%= @subnet %> netmask <%= @netmask %> {
-  range <%= @range_begin %> <%= @range_end %>;
+  range <%= @range_start %> <%= @range_end %>;
   option routers <%= @routers %>;
 }
 
