@@ -6,14 +6,14 @@ class pxe::syslinux {
     }
 
     file { '/var/lib/tftpboot/pxelinux.0':
-        ensure  => link,
-        target  => '/usr/lib/syslinux/pxelinux.0',
+        ensure  => present,
+        source  => '/usr/lib/syslinux/pxelinux.0',
         require => [File['/var/lib/tftpboot'],Package['syslinux-common'],],
     }
 
     file { '/var/lib/tftpboot/vesamenu.c32':
-        ensure  => link,
-        target  => '/usr/lib/syslinux/vesamenu.c32',
+        ensure  => present,
+        source  => '/usr/lib/syslinux/vesamenu.c32',
         require => [File['/var/lib/tftpboot'],Package['syslinux-common']],
     }
 
