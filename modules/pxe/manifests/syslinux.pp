@@ -25,6 +25,14 @@ class pxe::syslinux {
         require => [File['/var/lib/tftpboot'],Package['syslinux-common']],
     }
 
+    file { '/var/lib/tftpboot/install':
+        ensure  => directory,
+        owner   => 'root',
+        group   => 'root',
+        mode    => 755,
+        require => [File['/var/lib/tftpboot'],Package['syslinux-common']],
+    }
+
     file { '/var/lib/tftpboot/pxelinux.cfg/logo.png':
         ensure  => present,
         owner   => 'root',
