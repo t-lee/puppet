@@ -1,0 +1,33 @@
+DEFAULT vesamenu.c32 
+TIMEOUT 600
+ONTIMEOUT BootLocal
+PROMPT 0
+MENU INCLUDE pxelinux.cfg/pxe.conf
+NOESCAPE 1
+LABEL BootLocal
+        localboot 0
+        TEXT HELP
+        Boot to local hard disk
+        ENDTEXT
+MENU BEGIN Ubuntu
+MENU TITLE Ubuntu 
+        LABEL Previous
+        MENU LABEL Previous Menu
+        TEXT HELP
+        Return to previous menu
+        ENDTEXT
+        MENU EXIT
+        MENU SEPARATOR
+        MENU INCLUDE Ubuntu/Ubuntu.menu
+MENU END
+MENU BEGIN Debian
+MENU TITLE Debian 
+        LABEL Previous
+        MENU LABEL Previous Menu
+        TEXT HELP
+        Return to previous menu
+        ENDTEXT
+        MENU EXIT
+        MENU SEPARATOR
+        MENU INCLUDE Debian/Debian.menu
+MENU END
