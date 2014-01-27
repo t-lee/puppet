@@ -18,7 +18,7 @@ MENU TITLE Ubuntu
         ENDTEXT
         MENU EXIT
         MENU SEPARATOR
-        MENU INCLUDE Ubuntu/Ubuntu.menu
+        MENU INCLUDE install/Ubuntu/Ubuntu.menu
 MENU END
 MENU BEGIN Debian
 MENU TITLE Debian 
@@ -29,5 +29,5 @@ MENU TITLE Debian
         ENDTEXT
         MENU EXIT
         MENU SEPARATOR
-        MENU INCLUDE Debian/Debian.menu
+        MENU INCLUDE install/Debian/Debian.menu
 MENU END
