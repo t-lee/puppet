@@ -5,9 +5,9 @@
 ddns-update-style none;
 
 # option definitions common to all supported networks...
-option domain-name "<%= $pxe::dhcpd::domain_name %>";
-option domain-name-servers <%= $pxe::dhcpd::domain_name_servers %>;
-option subnet-mask <%= $pxe::dhcpd::subnet_maks %>;
+option domain-name "<%= @domain_name %>";
+option domain-name-servers <%= @domain_name_servers %>;
+option subnet-mask <%= @subnet_maks %>;
 
 default-lease-time 21600;
 max-lease-time 86400;
@@ -20,17 +20,17 @@ authoritative;
 # have to hack syslog.conf to complete the redirection).
 log-facility local7;
 
-server-name "<%= $pxe::dhcpd::server_name %>";
+server-name "<%= @server_name %>";
 filename "pxelinux.0";
-next-server <%= $pxe::dhcpd::next_server %>;
+next-server <%= @next_server %>;
 
 allow booting;
 allow bootp;
 
 
-subnet <%= $pxe::dhcpd::subnet %> netmask <%= $pxe::dhcpd::netmask %> {
-  range <%= $pxe::dhcpd::range_begin %> <%= $pxe::dhcpd::range_end %>;
-  option routers <%= $pxe::dhcpd::routers %>;
+subnet <%= @subnet %> netmask <%= @netmask %> {
+  range <%= @range_begin %> <%= @range_end %>;
+  option routers <%= @routers %>;
 }
 
 host qonos {
