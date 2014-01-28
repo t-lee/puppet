@@ -6,5 +6,5 @@ node 'sha-ka-ree.neutral-zone.de' inherits default {
     class {'fetchmail':}
     class {'bind':}
     class {'pxe':}
-    nfs::export {'/media/data/musik': host => '192.168.0.4'}
+    nfs::export {'/media/data/musik': host => '172.18.10.5'}
 }
