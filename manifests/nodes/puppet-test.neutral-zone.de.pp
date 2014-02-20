@@ -8,7 +8,7 @@ node 'puppet-test.neutral-zone.de' inherits default {
     class {'pxe':}
     class {'pxe::dhcpd':
         domain_name         => "neutral-zone.de",
-        domain_name_servers => "192.168.0.4",
+        domain_name_servers => "192.168.0.1",
         subnet_mask         => "255.255.255.0",
         server_name         => "puppet-test",
         next_server         => "192.168.111.1",
@@ -18,7 +18,7 @@ node 'puppet-test.neutral-zone.de' inherits default {
         range_end           => "192.168.111.199",
         routers             => "192.168.111.1" 
     }
-    nfs::export {'/srv/install':
+    nfs::export {'/var/lib/tftpboot/install':
         host    => '192.168.111.0/24',
         options => 'ro,async,no_root_squash,no_subtree_check' 
     }
