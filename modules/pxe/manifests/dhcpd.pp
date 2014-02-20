@@ -19,7 +19,6 @@ class pxe::dhcpd (
         owner   => 'root',
         group   => 'root',
         mode    => 644,
-        #source  => "puppet:///modules/pxe/etc/dhcp/dhcpd.conf",
         content => template("pxe/etc/dhcp/dhcpd.conf.erb"),
         require => Package['isc-dhcp-server'],
         notify  => Service['isc-dhcp-server'],
