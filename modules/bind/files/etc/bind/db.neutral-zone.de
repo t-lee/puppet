@@ -12,5 +12,6 @@ router		IN	A	192.168.0.1
 fritzbox	IN	A	192.168.0.2
 romulus		IN	A	192.168.0.3
 sha-ka-ree	IN	A	192.168.0.4
+easy-box	IN	A	192.168.0.7
 printer		IN	A	192.168.0.99
 
