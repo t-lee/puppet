@@ -1,6 +1,6 @@
 node 'sha-ka-ree.neutral-zone.de' inherits default {
     class {'openvpn':}
-    class {'backup::server':}
+    #class {'backup::server':} ### disabled since there is no backup volume attached
     class {'autofs':}
     class {'courier-imap':}
     class {'fetchmail':}
