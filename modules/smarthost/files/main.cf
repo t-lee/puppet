@@ -57,3 +57,11 @@ sender_canonical_maps = hash:/etc/postfix/canonical-sender
 
 virtual_alias_maps = hash:/etc/postfix/virtual
 
+notify_classes = resource, software, bounce, delay, 2bounce, policy, protocol
+
+smtp_tls_security_level = may
+smtp_sasl_auth_enable = yes
+# noplaintext weglassen, wenn Passwörter im Klartext übertragen werden müssen:
+# (nicht empfohlen, nur wenn's anders nicht funktioniert)
+smtp_sasl_security_options = noanonymous
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_password
