@@ -1,3 +1,5 @@
+# file managed by puppet (unless config_file_replace=false)
+#
 ## sudoers file.
 ##
 ## This file MUST be edited with the 'visudo' command as root.
@@ -34,6 +36,8 @@
 ## Prevent environment variables from influencing programs in an
 ## unexpected or harmful way (CVE-2005-2959, CVE-2005-4158, CVE-2006-0151)
 Defaults always_set_home
+## Path that will be used for every command run from sudo
+Defaults secure_path="/usr/sbin:/usr/bin:/sbin:/bin"
 Defaults env_reset
 ## Change env_reset to !env_reset in previous line to keep all environment variables
 ## Following list will no longer be necessary after this change
@@ -58,8 +62,8 @@ Defaults !insults
 ## This allows use of an ordinary user account for administration of a freshly
 ## installed system. When configuring sudo, delete the two
 ## following lines:
-Defaults targetpw   # ask for the password of the target user i.e. root
-ALL	ALL=(ALL) ALL   # WARNING! Only use this together with 'Defaults targetpw'!
+#Defaults targetpw   # ask for the password of the target user i.e. root
+#ALL	ALL=(ALL) ALL   # WARNING! Only use this together with 'Defaults targetpw'!
 
 ##
 ## Runas alias specification

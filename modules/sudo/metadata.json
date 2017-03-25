@@ -1,33 +1,34 @@
 {
-  "project_page": "https://github.com/saz/puppet-sudo",
-  "version": "2.1.0",
-  "checksums": {
-    "LICENSE": "c43ad7837d4770c3823fdab29a78f0e3",
-    "tests/init.pp": "63f528ee1d1698fadd336da35dd4ec7a",
-    "manifests/init.pp": "24e8c8196df22d2d065fdc3560a16b4c",
-    "files/sudoers.deb": "ebd77e09715c4da6be84d56233139fff",
-    "manifests/conf.pp": "62790e3791347b64cf451d88af25e9be",
-    "spec/spec_helper.rb": "ca19ec4f451ebc7fdb035b52eae6e909",
-    "Modulefile": "15f2007f2d20f9cf1358dc020c1d83e8",
-    "manifests/params.pp": "433fc4b22297464f878b1257de116071",
-    "files/sudoers.rhel": "4093e52552d97099d003c645f15f9372",
-    "files/sudoers.archlinux": "f0038cf3a90e11997ec39131a39b8a50",
-    "files/sudoers.suse": "40468b19c03962cf383caf5ababed6d0",
-    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
-    "files/sudoers.solaris": "2d2d9d5be3b5905e42466556f6f1d5ad",
-    "files/sudoers.freebsd": "4e2d60b0bdc7c3d77ceae7fd9224f47f",
-    "README.md": "4c9ff3ea2db2207b97efe4fc5b9720e5"
-  },
-  "source": "UNKNOWN",
+  "name": "saz-sudo",
+  "version": "4.1.0",
   "author": "saz",
+  "summary": "Manage sudo configuration via Puppet",
+  "license": "Apache-2.0",
+  "source": "https://github.com/saz/puppet-sudo",
+  "project_page": "https://github.com/saz/puppet-sudo",
+  "issues_url": "https://github.com/saz/puppet-sudo/issues",
   "dependencies": [
-
+    {"name":"puppetlabs/stdlib","version_requirement":">=2.6.0"}
   ],
-  "license": "Apache License, Version 2.0",
-  "types": [
-
+  "data_provider": null,
+  "tags": [
+    "sudo"
   ],
-  "summary": "UNKNOWN",
-  "description": "Manage sudo configuration via Puppet",
-  "name": "saz-sudo"
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5.0",
+        "6.0"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "10.04",
+        "14.04"
+      ]
+    }
+  ]
 }

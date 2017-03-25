@@ -7,19 +7,42 @@
 #     Ensure if present or absent.
 #     Default: present
 #
-#   [*autoupgrade*]
-#     Upgrade package automatically, if there is a newer version.
-#     Default: false
-#
 #   [*package*]
 #     Name of the package.
 #     Only set this, if your platform is not supported or you know,
 #     what you're doing.
 #     Default: auto-set, platform specific
 #
+#   [*package_ensure*]
+#     Allows you to ensure a particular version of a package
+#     Default: present / lastest for RHEL < 5.5
+#
+#   [*package_source*]
+#     Where to find the package.  Only set this on AIX (required) and
+#     Solaris (required) or if your platform is not supported or you
+#     know, what you're doing.
+#
+#     The default for aix is the perzl sudo package. For solaris 10 we
+#     use the official www.sudo.ws binary package.
+#
+#     Default: AIX: perzl.org
+#              Solaris: www.sudo.ws
+#
+#   [*package_admin_file*]
+#     Where to find a Solaris 10 package admin file for
+#     an unattended installation. We do not supply a default file, so
+#     this has to be staged separately
+#
+#     Only set this on Solaris 10 (required)
+#     Default: /var/sadm/install/admin/puppet
+#
 #   [*purge*]
 #     Whether or not to purge sudoers.d directory
 #     Default: true
+#
+#   [*purge_ignore*]
+#     Files to exclude from purging in sudoers.d directory
+#     Default: undef
 #
 #   [*config_file*]
 #     Main configuration file.
@@ -30,6 +53,10 @@
 #   [*config_file_replace*]
 #     Replace configuration file with that one delivered with this module
 #     Default: true
+#
+#   [*includedirsudoers*]
+#     Add #includedir /etc/sudoers.d to the end of sudoers, if not config_file_replace
+#     Default: true if RedHat 5.x
 #
 #   [*config_dir*]
 #     Main configuration directory
@@ -43,63 +70,83 @@
 #     what you're doing.
 #     Default: auto-set, platform specific
 #
+#   [*ldap_enable*]
+#     Enable ldap support on the package
+#     Default: false
+#
 # Actions:
-#   Installs locales package and generates specified locales
+#   Installs sudo package and checks the state of sudoers file and
+#   sudoers.d directory.
 #
 # Requires:
 #   Nothing
 #
 # Sample Usage:
-#   class { 'locales':
-#     locales => [
-#       'en_US.UTF-8 UTF-8',
-#       'de_DE.UTF-8 UTF-8',
-#       'en_GB.UTF-8 UTF-8',
-#     ],
-#   }
+#   class { 'sudo': }
 #
 # [Remember: No empty lines between comments and class definition]
 class sudo(
-  $ensure = 'present',
-  $autoupgrade = false,
-  $package = $sudo::params::package,
-  $purge = true,
-  $config_file = $sudo::params::config_file,
+  $enable              = true,
+  $package_default     = $sudo::params::package,
+  $package_ldap        = $sudo::params::package_ldap,
+  $package_ensure      = $sudo::params::package_ensure,
+  $package_source      = $sudo::params::package_source,
+  $package_admin_file  = $sudo::params::package_admin_file,
+  $purge               = true,
+  $purge_ignore        = undef,
+  $config_file         = $sudo::params::config_file,
   $config_file_replace = true,
-  $config_dir = $sudo::params::config_dir,
-  $source = $sudo::params::source
+  $includedirsudoers   = $sudo::params::includedirsudoers,
+  $config_dir          = $sudo::params::config_dir,
+  $source              = $sudo::params::source,
+  $ldap_enable         = false,
 ) inherits sudo::params {
 
-  case $ensure {
-    /(present)/: {
-      $dir_ensure = 'directory'
-      if $autoupgrade == true {
-        $package_ensure = 'latest'
-      } else {
-        $package_ensure = 'present'
-      }
+
+  validate_bool($enable)
+  case $enable {
+    true: {
+      $dir_ensure  = 'directory'
+      $file_ensure = 'present'
     }
-    /(absent)/: {
-      $package_ensure = 'absent'
-      $dir_ensure = 'absent'
+    false: {
+      $dir_ensure  = 'absent'
+      $file_ensure = 'absent'
     }
-    default: {
-      fail('ensure parameter must be present or absent')
-    }
+    default: { fail('no $enable is set') }
   }
 
-  package { $package:
-    ensure => $package_ensure,
+  validate_bool($ldap_enable)
+  case $ldap_enable {
+    true: {
+      if $package_ldap == undef {
+        fail('on your os ldap support for sudo is not yet supported')
+      }
+      $package = $package_ldap
+    }
+    false: {
+      $package = $package_default
+    }
+    default: { fail('no $ldap_enable is set') }
+  }
+
+
+  class { '::sudo::package':
+    package            => $package,
+    package_ensure     => $package_ensure,
+    package_source     => $package_source,
+    package_admin_file => $package_admin_file,
+    ldap_enable        => $ldap_enable,
   }
 
   file { $config_file:
-    ensure  => $ensure,
+    ensure  => $file_ensure,
     owner   => 'root',
     group   => $sudo::params::config_file_group,
     mode    => '0440',
     replace => $config_file_replace,
     source  => $source,
-    require => Package[$package],
+    require => Class['sudo::package'],
   }
 
   file { $config_dir:
@@ -109,6 +156,34 @@ class sudo(
     mode    => '0550',
     recurse => $purge,
     purge   => $purge,
-    require => Package[$package],
+    ignore  => $purge_ignore,
+    require => Class['sudo::package'],
   }
+
+  if $config_file_replace == false and $includedirsudoers {
+    augeas { 'includedirsudoers':
+      changes => ['set /files/etc/sudoers/#includedir /etc/sudoers.d'],
+      incl    => $config_file,
+      lens    => 'Sudoers.lns',
+    }
+  }
+
+  # Load the Hiera based sudoer configuration (if enabled and present)
+  #
+  # NOTE: We must use 'include' here to avoid circular dependencies with
+  #     sudo::conf
+  #
+  # NOTE: There is no way to detect the existence of hiera. This automatic
+  #   functionality is therefore made exclusive to Puppet 3+ (hiera is embedded)
+  #   in order to preserve backwards compatibility.
+  #
+  #   http://projects.puppetlabs.com/issues/12345
+  #
+  if (versioncmp($::puppetversion, '3') != -1) {
+    include '::sudo::configs'
+  }
+
+  anchor { 'sudo::begin': } ->
+  Class['sudo::package']    ->
+  anchor { 'sudo::end': }
 }
