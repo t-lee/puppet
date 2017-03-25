@@ -1,4 +1,8 @@
-define manage_user ($ensure = present, groups = []) {
+define manage_user (
+    String $ensure = present,
+    Array $groups = [],
+    String $home = '/home'
+) {
   $user = $title
 
   if $ensure == "absent" {
@@ -9,7 +13,7 @@ define manage_user ($ensure = present, groups = []) {
       ensure  => 'absent',
       require => User[$user], 
     }
-    #file { "/home/$user":
+    #file { "$home/$user":
     #  ensure  => 'absent',
     #  recurse => true,
     #  force   => true,
@@ -37,7 +41,7 @@ define manage_user ($ensure = present, groups = []) {
     
     user { $user:
       ensure     => $ensure,
-      home       => "/data/home/$user",
+      home       => "$home/$user",
       managehome => true,
       uid        => $id,
       shell      => '/bin/bash',
