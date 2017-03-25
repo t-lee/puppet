@@ -1,0 +1,2 @@
+---
+hosts::config_file_template: "hosts/%{::lsbdistcodename}/etc/hosts.erb"
