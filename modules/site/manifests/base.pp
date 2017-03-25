@@ -28,24 +28,26 @@ class site::base {
 
     include bashrc
 
-###    # manage sudoers
-###    class {'group::admins':}
-###    class {'sudo':}
-###    sudo::conf { 'admins':
-###      priority => 10,
-###      content  => "%admins ALL=(ALL) NOPASSWD: ALL\n",
-###    }
-###    Class['group::admins'] -> Class['sudo']
-###
-###    manage_user {[tommy]: 
-###        ensure  => present,
-###        groups  => ['admins'],
-###        require => Group['admins'],
-###    }
-###    manage_user {[pi]:
-###        ensure => absent,
-###    }
-###
+    # manage sudoers
+#    class {'group::admins':}
+    class {'sudo':}
+#    sudo::conf { 'admins':
+#      priority => 10,
+#      content  => "%admins ALL=(ALL) NOPASSWD: ALL\n",
+#    }
+#    Class['group::admins'] -> Class['sudo']
+
+
+
+    manage_user {[tommy]: 
+        ensure  => present,
+        groups  => ['sudo'],
+        require => Class['sudo'],
+    }
+    manage_user {[pi]:
+        ensure => absent,
+    }
+
 ###    class {'cron':}
 }
 
